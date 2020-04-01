@@ -18,12 +18,12 @@ In order to run Pepper you will need to install the below libraries:
 
 ## Author
 
-* [**Georgios Angelopoulos**](https://www.linkedin.com/in/george-angelopoulos/)
+[**Georgios Angelopoulos**](https://www.linkedin.com/in/george-angelopoulos/)
 
 
 ## Supervisor
 
-* **Vladimir Estivill-Castro** - [Link](https://www.upf.edu/web/etic/entry/-/-/54009/409/vladimir-estivill)
+[**Vladimir Estivill-Castro**](https://www.upf.edu/web/etic/entry/-/-/54009/409/vladimir-estivill)
 
 <!--
 * spaCy is compatible with 64-bit CPython 2.7 / 3.5+ and runs on Unix/Linux, macOS/OS X and Windows:
