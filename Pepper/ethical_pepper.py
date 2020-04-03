@@ -10,7 +10,7 @@ import sys
 
 
 
-serverIp = "127.0.0.1"
+serverIp = "192.168.1.14"
 messages = ['']
 server_address = (serverIp, 10001)
 
@@ -41,18 +41,18 @@ for message in messages:
             data = s.recv(1024)
             if(data!=check): 	
     
-                if(data == 'Begin'):
+                if(data == b'Begin'):
                     s.send('Begin OK')    
     				
-                if(data == 'Camera'):	
+                if(data == b'Camera'):	
                     #camera()
-                    s.send("Camera OK")      
+                    s.send(b"Camera OK")      
     
-                if(data == 'Hands'):
+                if(data == b'Hands'):
                     #move_hands()
                     s.send("Hands OK")    
     
-                if(data == 'Stop'):
+                if(data == b'Stop'):
                     print("bye")                    
                     break
 
