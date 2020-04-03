@@ -13,7 +13,7 @@ The aim of this project is to construct an intelligent and integrated system on 
 
 * Python 3.7 (On your computer or server)
 
-In order to run Pepper you will need to install the below libraries:
+In order to run Pepper you will need to install the following libraries:
 
 ## Enable Pepper
 
