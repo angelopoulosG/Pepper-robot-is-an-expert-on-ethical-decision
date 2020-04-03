@@ -9,11 +9,11 @@ The aim of this project is to construct an intelligent and integrated system on 
 
 
 
-## Prerequisites
+## Prerequisites (On your computer or server)
 
-* Python 3.7 (On your computer or server)
+* Python 3.7 
 
-In order to run Pepper you will need to install the following libraries:
+You will need to install the following libraries:
 
 ## Enable Pepper
 
