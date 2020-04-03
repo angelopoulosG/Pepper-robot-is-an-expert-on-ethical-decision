@@ -17,8 +17,12 @@ In order to run Pepper you will need to install the following libraries:
 
 ## Enable Pepper
 
+SSH onto the robot and launch the python code using:
+```
+python ethical_pepper.py
+```
 
-## Author
+## Master Student
 
 [**Georgios Angelopoulos**](https://www.linkedin.com/in/george-angelopoulos/)
 
