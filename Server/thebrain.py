@@ -32,7 +32,7 @@ def qrcode():
 
 HOST = '192.168.1.14'  # Standard loopback interface address (localhost)
 PORT = 10001        # Port to listen on (non-privileged ports are > 1023)
-length= 0
+camera,audio= 0,0
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
@@ -44,32 +44,46 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if not data:
                 break
             if data == b'Ready':
-                conn.sendall(b"Begin")
+                conn.sendall(b"Begin.endmes")
             elif data == b'Begin OK':
-                conn.sendall(b"Camera")
-                camera=1
+                conn.sendall(b"Voice.endmes Hello how are you?")
+                audio=1
             elif data == b'Hands OK':
-                conn.sendall(b"Stop")
+                conn.sendall(b"Stop.endmes")
             else:
-
-                if camera == 2:
+                if audio == 1:
+                    length=int(data)
+                    conn.sendall(b"ContinueWithVoice.endmes")                    
+                    audio = 2
+                elif audio == 2:
+                    t = open("audio.wav", "ab+")
+                    t.write(data)
+                    t.close()
+                    bytes = os.stat('audio.wav').st_size
+                    if bytes == length:
+                        audio = 0                   
+                        #os.remove("audio.wav")
+                        conn.sendall(b"Camera.endmes")
+                        camera=1                
+                elif camera == 1:
+                    length=int(data)
+                    conn.sendall(b"ContinueWithCamera.endmes")                    
+                    camera = 2         
+                elif camera == 2:
                     t = open("image.jpg", "ab+")
                     t.write(data)
                     t.close()
                     bytes = os.stat('image.jpg').st_size
-                    print(bytes)
+
                     if bytes == length:
                         camera = 0                   
                         qrcode()
                         os.remove("image.jpg")
-                        conn.sendall(b"Hands")
-                if camera == 1:
-                    length=int(data)
-                    print(length)
-
-                    string=0
-                    conn.sendall(b"ContinueWithCamera")                    
-                    camera = 2                        
+                        conn.sendall(b"Hands.endmes")
+                
+                else:
+                    print("hi")
+               
         
 
             
