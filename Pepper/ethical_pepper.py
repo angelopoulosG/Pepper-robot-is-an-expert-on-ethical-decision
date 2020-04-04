@@ -8,7 +8,7 @@ Created on Thu Apr  2 16:01:44 2020
 import socket
 import sys
 import os
-#from naoqi import ALProxy
+from naoqi import ALProxy
 
 
 
@@ -38,6 +38,28 @@ def camera():
 
 #===================================================================
 
+def audio(message):
+
+#Function for audio player and for recording
+	tts = ALProxy("ALTextToSpeech", "127.0.0.1", 9559)
+	audio = ALProxy("ALAudioDevice", "127.0.0.1", 9559)
+	record = ALProxy("ALAudioRecorder", "127.0.0.1", 9559)
+	aup = ALProxy("ALAudioPlayer", "127.0.0.1", 9559)
+
+
+	tts.setParameter("doubleVoice", 1)
+	tts.setParameter("doubleVoiceLevel", 0)
+	tts.setParameter("doubleVoiceTimeShift", 0.1)
+	tts.setParameter("pitchShift", 1.1)
+	tts.say(message)
+	record.startMicrophonesRecording("/var/volatile/audio.wav", 'wav', 16000, (0,0,1,0))
+	time.sleep(3)
+	record.stopMicrophonesRecording()
+	tts.say("Recording is. over.")
+	time.sleep(1)
+
+#===================================================================
+
 # Create a TCP/IP socket
 socks = [ socket.socket(socket.AF_INET, socket.SOCK_STREAM)]
 
@@ -58,30 +80,42 @@ for message in messages:
         s.send("Ready")
 
 
-    check=0
     # Read responses on both sockets
     for s in socks:
         while True:
             data = s.recv(4096)
-            if(data!=check): 	
-    
-                if(data == b'Begin'):
+            if(data!= 0):
+
+
+	    	command = data.split('.endmes')[0]
+                if(command == 'Begin'):
                     s.send('Begin OK')    
     				
-                if(data == b'Camera'):	
+                if(command == 'Camera'):	
                     camera()
                     image = "/var/volatile/image.jpg"
                     bytes = open(image).read()	
+                    s.send(str(len(bytes)))
+
+                if(command == 'Voice'):	
+                    message = data.split('.endmes')[1]
+                    print(message)	
+                    audio(message)			
+                    voice = "/var/volatile/audio.wav"
+                    bytes = open(voice).read()	
                     s.send(str(len(bytes)))	
 
-                if(data == b'ContinueWithCamera'):			
+                if(command == 'ContinueWithCamera'):			
                     s.sendall(bytes)      
+
+                if(command == 'ContinueWithVoice'):			
+                    s.sendall(bytes)  
     
-                if(data == b'Hands'):
+                if(command == 'Hands'):
                     #move_hands()
                     s.send("Hands OK")    
     
-                if(data == b'Stop'):
+                if(command == 'Stop'):
                     print("bye")                    
                     break
 
