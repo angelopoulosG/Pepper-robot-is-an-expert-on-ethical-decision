@@ -26,10 +26,14 @@ def qrcode():
 
     else:
         print("QR code not detected")
+
 ###################################################################################################
         
         
-
+        
+        
+        
+        
 HOST = '192.168.1.14'  # Standard loopback interface address (localhost)
 PORT = 10001        # Port to listen on (non-privileged ports are > 1023)
 camera,audio= 0,0
@@ -44,7 +48,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if not data:
                 break
             if data == b'Ready':
-                conn.sendall(b"Begin.endmes")
+                conn.sendall(b"BeginLearning.endmes")
             elif data == b'Begin OK':
                 conn.sendall(b"Voice.endmes Hello how are you?")
                 audio=1
