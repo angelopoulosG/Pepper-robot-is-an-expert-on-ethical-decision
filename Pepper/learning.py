@@ -2,12 +2,12 @@ import matplotlib.pyplot as plt
 
 
 cases = [
-        'In this case, the self-driving car, with sudden brake failure, will continue ahead and crash into a concrete barrier  and it will result in the death of the 3 passenger (3 men) or the self-driving car will drive through a pedestrian crossing in the other lane and this  will result the killing of the 3 pedestrian (3 women)',
+        'In this case, the self-driving car, with sudden brake failure, will continue ahead and crash into a concrete barrier  and it will result in the death of the 3 passengers (3 men) or the self-driving car will drive through a pedestrian crossing in the other lane and this  will result in the killing of the 3 pedestrians (3 women)',
         'In this case, the self-driving car, with sudden brake failure, will continue ahead and drive through pedestrians (2 women) crossing ahead or will swerve and drive through a pedestrian (1 man) crossing in the other lane.',
         'In this case, the self-driving car, with sudden brake failure, will swerve and drive through pedestrians (1 boy and 1 man) crossing in the other lane (Note that the affected pedestrians are flouting the law by crossing on the red signal.) or will continue ahead and crash into a concrete barrier and it will result in the death of the 2 elderly passengers.',
-        'The self-driving car, with sudden brake failure, will continue ahead and drive through a pedestrian (1 woman) illegaly crossing ahead or will swerve and drive through a pedestrian (1 man) crossing legally in the other lane.',
-        'The self-driving car, with sudden brake failure, will continue ahead and drive through a pedestrian (1 children ) crossing ahead or will swerve and crash into a concrete barrier and it will result in the death of the passenger (1 woman ).',
-        'In this case, the self-driving car, with sudden brake failure, will swerve and drive through pedestrians (1 woman and 2 children) crossing in the other lane. or will continue ahead and crash into a concrete barrier and it will result in the death of the 2 passengers (1 woman and 1 children).'
+        'The self-driving car, with sudden brake failure, will continue ahead and drive through a pedestrian (1 woman) illegally crossing ahead or will swerve and drive through a pedestrian (1 man) crossing legally in the other lane.',
+        'The self-driving car, with sudden brake failure, will continue ahead and drive through a pedestrian (1 child) crossing ahead or will swerve and crash into a concrete barrier and it will result in the death of the passenger (1 woman ).',
+        'In this case, the self-driving car, with sudden brake failure, will swerve and drive through pedestrians (1 woman and 2 children) crossing in the other lane. or will continue ahead and crash into a concrete barrier and it will result in the death of the 2 passengers (1 woman and 1 child).'
         ]
 
 
@@ -538,7 +538,6 @@ while True:
 
 
 
-plt.style.use('dark_background')
 x=[ -1,5]
 y=[ 0,0]
 plt.yticks([])
