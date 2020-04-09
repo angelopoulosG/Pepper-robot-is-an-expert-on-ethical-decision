@@ -35,7 +35,7 @@ for i in range(len(cases)):
 ##########################################
     while True:
         try:
-            data = int(input('Enter your decision 1 or 2 : '))
+            data = int(raw_input('Enter your decision 1 or 2 : '))
         except ValueError:
             print("Sorry, I didn't understand that.")
             continue
@@ -434,7 +434,7 @@ while True:
     ##########################################
         while True:
             try:
-                data = (input('Enter your decision y or n : '))
+                data = (raw_input('Enter your decision y or n : '))
             except ValueError:
                 print("Sorry, I didn't understand that.")
                 continue
@@ -467,7 +467,7 @@ while True:
     ##########################################
         while True:
             try:
-                data = (input('Enter your decision y or n : '))
+                data = (raw_input('Enter your decision y or n : '))
             except ValueError:
                 print("Sorry, I didn't understand that.")
                 continue
@@ -501,7 +501,7 @@ while True:
     ##########################################
         while True:
             try:
-                data = (input('Enter your decision y or n : '))
+                data = (raw_input('Enter your decision y or n : '))
             except ValueError:
                 print("Sorry, I didn't understand that.")
                 continue
@@ -552,6 +552,7 @@ plt.xlabel("Doesn't matter           -            Matters a lot")
 plt.axis('equal')
 plt.legend()
 plt.show()
+
 
 
 
