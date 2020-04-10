@@ -5,6 +5,7 @@ Created on Thu Apr  2 16:01:44 2020
 @author: Georgios Angelopoulos
 """
 
+import learning
 import socket
 import sys
 import os
@@ -60,6 +61,8 @@ def audio(message):
 
 #===================================================================
 
+
+
 # Create a TCP/IP socket
 socks = [ socket.socket(socket.AF_INET, socket.SOCK_STREAM)]
 
@@ -88,9 +91,10 @@ for message in messages:
 
 
 	    	command = data.split('.endmes')[0]
-                if(command == 'Begin'):
+                if(command == 'BeginLearning'):
+                    learningfunction()		
                     s.send('Begin OK')    
-    				
+
                 if(command == 'Camera'):	
                     camera()
                     image = "/var/volatile/image.jpg"
