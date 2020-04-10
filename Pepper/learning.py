@@ -379,20 +379,7 @@ class learningfunction:
         sumswerve=0
     
     
-    
-    plt.style.use('dark_background')
-    x=[-1 ,1]
-    y=[ 0,0]
-    plt.yticks([])
-    plt.plot(x,y, 'r-')
-    plt.plot(sumpas,0.1,'go',label="Protecting Passengers")
-    plt.plot(sumlaw,0.2,'bo',label="Upholding the law")
-    plt.plot(sumsaving,0.3,'ro',label="Saving more lives")
-    plt.plot(sumswerve,0.4,'yo',label="Avoiding Intervention")
-    plt.xlabel("Doesn't matter           -            Matters a lot")
-    plt.axis('equal')
-    plt.legend()
-    plt.show()
+       ##########################################
     
     
     
