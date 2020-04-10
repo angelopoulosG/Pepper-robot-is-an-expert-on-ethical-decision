@@ -13,19 +13,21 @@ cases = [
 
 
 
-           #.male.female.child.elder.followinglaw
-a=[['','pas.3.0.0.0','ped.0.3.0.0.FL'],
-   ['','ped.0.2.0.0.FL','ped.1.0.0.0.FL'],
-   ['','ped.1.0.1.0.NL','pas.0.0.0.2'],
-   ['','ped.0.1.0.0.NL','ped.1.0.0.0.FL'],
-   ['','ped.0.0.1.0.FL','pas.0.1.0.0'],
-   ['','ped.0.1.2.0.FL','pas.0.1.1.0']]
+           #.swerve.male.female.child.elder.followinglaw
+
+
+a=[['','pas.0.3.0.0.0','ped.1.0.3.0.0.FL'],
+   ['','ped.0.0.2.0.0.FL','ped.1.1.0.0.0.FL'],
+   ['','ped.1.1.0.1.0.NL','pas.0.0.0.0.2'],
+   ['','ped.0.0.1.0.0.NL','ped.1.1.0.0.0.FL'],
+   ['','ped.0.0.0.1.0.FL','pas.1.0.1.0.0'],
+   ['','ped.1.0.1.2.0.FL','pas.0.0.1.1.0']]
 
 
 
-i,sumpas,passenger,sumlaw,law,sumsaving,saving,gender,sumgender,sumchild,sumelder=0,0,0,0,0,0,0,0,0,0,0
+i,sumpas,passenger,sumlaw,law,sumsaving,saving,gender,sumgender,sumchild,sumelder,swerve,sumswerve=0,0,0,0,0,0,0,0,0,0,0,0,0
 
-print("Hello, I am going to learn from your decisions. I am going to ask you 12 questions. Let's Start!")
+print("Hello, I am going to learn from your decisions. I am going to ask you some questions. Let's Start!")
 
 for i in range(len(cases)):
     print(cases[i])
@@ -66,15 +68,15 @@ for i in range(len(cases)):
         c=c[1]
         answer2 = c.split('.')
     
-    male1=int(answer1[1])
-    female1=int(answer1[2])
-    child1=int(answer1[3])
-    elder1=int(answer1[4])
+    male1=int(answer1[2])
+    female1=int(answer1[3])
+    child1=int(answer1[4])
+    elder1=int(answer1[5])
     sumpeople1 = male1+female1+child1+elder1 
-    male2=int(answer2[1])
-    female2=int(answer2[2])
-    child2=int(answer2[3])
-    elder2=int(answer2[4])
+    male2=int(answer2[2])
+    female2=int(answer2[3])
+    child2=int(answer2[4])
+    elder2=int(answer2[5])
     sumpeople2 = male2+female2+child2+elder2 
     summale=male1+male2
     sumfemale=female1+female2
@@ -97,7 +99,15 @@ for i in range(len(cases)):
         else:
             sumlaw=sumlaw+1
             law=law+1      
-            
+
+        if answer1[1] == '0':
+            sumswerve=sumswerve+1
+            swerve=swerve+1
+        else:	
+            sumswerve=sumswerve-1
+            swerve=swerve+1              
+
+
         if sumpeople1 > sumpeople2:
             sumsaving =sumsaving -1
             saving=saving+1
@@ -174,7 +184,14 @@ for i in range(len(cases)):
             law=law+1
         else:
             sumlaw=sumlaw-1
-            law=law+1         
+            law=law+1     
+    
+        if answer1[1] == '0':
+            sumswerve=sumswerve+1
+            swerve=swerve+1
+        else:
+            sumswerve=sumswerve-1
+            swerve=swerve+1     
             
         if sumpeople1 > sumpeople2:
             sumsaving =sumsaving -1
@@ -254,7 +271,12 @@ for i in range(len(cases)):
             sumlaw=sumlaw+1
             law=law+1           
             
-            
+        if answer1[1] == '0':
+            sumswerve=sumswerve+1
+            swerve=swerve+1
+        else:
+            sumswerve=sumswerve-1
+            swerve=swerve+1                 
             
             
         if sumpeople1 > sumpeople2:
@@ -340,16 +362,21 @@ if law:
 else:
     sumlaw=0
 
+if law:
+    sumlaw = sumlaw /law
+else:
+    sumlaw=0
+
 if saving:
     sumsaving = sumsaving /saving
 else:
     sumsaving=0
 
 
-if gender:
-    sumgender= sumgender /gender
+if swerve:
+    sumswerve= sumswerve /swerve
 else:
-    sumgender=0
+    sumswerve=0
 
 
 
@@ -361,6 +388,7 @@ plt.plot(x,y, 'r-')
 plt.plot(sumpas,0.1,'go',label="Protecting Passengers")
 plt.plot(sumlaw,0.2,'bo',label="Upholding the law")
 plt.plot(sumsaving,0.3,'ro',label="Saving more lives")
+plt.plot(sumswerve,0.4,'yo',label="Avoiding Intervention")
 plt.xlabel("Doesn't matter           -            Matters a lot")
 plt.axis('equal')
 plt.legend()
@@ -412,7 +440,19 @@ elif (sumgender>=-1 and sumgender<=-0.75):
 elif (sumgender>0.25 and sumgender<0.75):
     weight_sumgender=3
 else:
-    weight_sumgender=4      
+    weight_sumgender=4   
+
+
+if (sumswerve>=-0.25 and sumswerve<=0.25):
+    weight_sumswerve=2
+elif (sumswerve>-0.75 and sumswerve<-0.25):
+    weight_sumswerve=1
+elif (sumswerve>=-1 and sumswerve<=-0.75):
+    weight_sumswerve=0
+elif (sumswerve>0.25 and sumswerve<0.75):
+    weight_sumswerve=3
+else:
+    weight_sumswerve=4   
 
 
 
@@ -428,7 +468,7 @@ else:
 while True:
     
     if weight_sumpas == weight_sumlaw:
-        print("The self-driving car, with sudden brake failure, will swerve and drive through a pedestrian crossing in the other lane legally and will save the passenger.")
+        print("The self-driving car, with sudden brake failure, will drive through a pedestrian crossing in the lane legally and will save the passenger.")
         print("Do you agree?")
     #getting user's answer
     ##########################################
@@ -461,7 +501,7 @@ while True:
                 
                 
     elif weight_sumpas == weight_sumsaving:
-        print("The self-driving car, with sudden brake failure, will swerve and drive through two pedestrians crossing and will save the passenger.")
+        print("The self-driving car, with sudden brake failure, will drive through two pedestrians crossing and will save the passenger.")
         print("Do you agree?")
     #getting user's answer
     ##########################################
@@ -495,7 +535,7 @@ while True:
     ##########################################            
     
     elif weight_sumsaving == weight_sumlaw:
-        print("The self-driving car, with sudden brake failure, will swerve and drive through two pedestrian crossing in the other lane ilegally and will save another pedestrian who is crossing in your lane legally.")
+        print("The self-driving car, with sudden brake failure, will drive through three pedestrian crossing in the lane ilegally and will save another pedestrian who is crossing legally.")
         print("Do you agree?")
     #getting user's answer
     ##########################################
@@ -524,7 +564,105 @@ while True:
 
     ##########################################
     ##########################################
-    ##########################################    
+    ##########################################  
+
+
+    elif weight_sumswerve == weight_sumlaw:
+        print("The self-driving car, with sudden brake failure, will swerve and drive through a pedestrian crossing in the other lane ilegally and will save another pedestrian who is crossing your lane legally.")
+        print("Do you agree?")
+    #getting user's answer
+    ##########################################
+        while True:
+            try:
+                data = (raw_input('Enter your decision y or n : '))
+            except ValueError:
+                print("Sorry, I didn't understand that.")
+                continue
+        
+            if data != 'y' and data != 'n':
+                print("Sorry, your response must be Y or n.")
+                continue
+            else:
+                #we're ready to exit the loop.
+                break    
+    ##########################################   
+        if  data == 'y':
+            weight_sumswerve=weight_sumswerve-1
+            weight_sumlaw=weight_sumlaw+1
+            
+        else:
+            weight_sumswerve=weight_sumswerve+1
+            weight_sumlaw=weight_sumlaw-1
+
+
+    ##########################################
+    ##########################################
+    ##########################################   
+
+
+    elif weight_sumswerve == weight_sumsaving:
+        print("The self-driving car, with sudden brake failure, will swerve and drive through a pedestrian crossing in the other lane and will save three pedestrians who is crossing your lane.")
+        print("Do you agree?")
+    #getting user's answer
+    ##########################################
+        while True:
+            try:
+                data = (raw_input('Enter your decision y or n : '))
+            except ValueError:
+                print("Sorry, I didn't understand that.")
+                continue
+        
+            if data != 'y' and data != 'n':
+                print("Sorry, your response must be Y or n.")
+                continue
+            else:
+                #we're ready to exit the loop.
+                break    
+    ##########################################   
+        if  data == 'y':
+            weight_sumswerve=weight_sumswerve-1
+            weight_sumsaving=weight_sumsaving+1
+            
+        else:
+            weight_sumswerve=weight_sumswerve+1
+            weight_sumsaving=weight_sumsaving-1
+
+
+    ##########################################
+    ##########################################
+    ##########################################  
+
+    elif weight_sumswerve == weight_sumpas:
+        print("The self-driving car, with sudden brake failure, will swerve and drive through a pedestrian crossing in the other lane and will save the passenger.")
+        print("Do you agree?")
+    #getting user's answer
+    ##########################################
+        while True:
+            try:
+                data = (raw_input('Enter your decision y or n : '))
+            except ValueError:
+                print("Sorry, I didn't understand that.")
+                continue
+        
+            if data != 'y' and data != 'n':
+                print("Sorry, your response must be Y or n.")
+                continue
+            else:
+                #we're ready to exit the loop.
+                break    
+    ##########################################   
+        if  data == 'y':
+            weight_sumswerve=weight_sumswerve-1
+            weight_sumpas=weight_sumpas+1
+            
+        else:
+            weight_sumswerve=weight_sumswerve+1
+            weight_sumpas=weight_sumpas-1
+
+
+    ##########################################
+    ##########################################
+    ##########################################  
     
         
     else:
@@ -538,14 +676,14 @@ while True:
 
 
 
-x=[ -1,5]
+x=[ 0,4]
 y=[ 0,0]
 plt.yticks([])
 plt.plot(x,y, 'r-')
 plt.plot(weight_sumpas,0.1,'go',label="Protecting Passengers")
 plt.plot(weight_sumlaw,0.1,'bo',label="Upholding the law")
 plt.plot(weight_sumsaving,0.1,'ro',label="Saving more lives")
-
+plt.plot(weight_sumswerve,0.1,'yo',label="Avoiding Intervention")
 plt.xlabel("Doesn't matter           -            Matters a lot")
 
 plt.axis('equal')
