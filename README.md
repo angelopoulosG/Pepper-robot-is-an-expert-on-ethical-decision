@@ -15,9 +15,17 @@ The aim of this project is to construct an intelligent and integrated system on 
 
 You will need to install the following libraries:
 
-## Enable Pepper
+## How to run it
 
+*Enable the "Brain" from the server
+
+```
+python3 thebrain.py
+```
+
+* Enable Pepper
 SSH onto the robot and launch the python code using:
+
 ```
 python ethical_pepper.py
 ```
@@ -48,11 +56,6 @@ pip install SpeechRecognition
 ```
 
 
-## Enable Pepper
-
-```
-python listen_and_talk.py
-```
 
 
 -->
