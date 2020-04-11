@@ -17,7 +17,7 @@ You will need to install the following libraries:
 
 ## How to run it
 
-*Enable the "Brain" from the server
+* Enable the "Brain" from the server
 
 ```
 python3 thebrain.py
