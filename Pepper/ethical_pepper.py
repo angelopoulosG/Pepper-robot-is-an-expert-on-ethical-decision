@@ -5,19 +5,27 @@ Created on Thu Apr  2 16:01:44 2020
 @author: Georgios Angelopoulos
 """
 
-import learning
+from learning import Learning
 import socket
 import sys
 import os
-from naoqi import ALProxy
+#from naoqi import ALProxy
 
 
 
 serverIp = "192.168.1.14"
+
+
 messages = ['']
 server_address = (serverIp, 10001)
 
 
+global tts
+global audio
+global record
+global aup
+global photoCaptureProxy
+photoCaptureProxy = tts = audio = record = aup = None 
 
 
 #===================================================================
@@ -25,44 +33,68 @@ server_address = (serverIp, 10001)
 def camera():
 
 #Function for capturing a photo
-
-	# Create a proxy to ALPhotoCapture
-	try:
-	  photoCaptureProxy = ALProxy("ALPhotoCapture", "127.0.0.1", 9559)
-	except Exception, e:
-	  print "Error when creating ALPhotoCapture proxy:"
-	  print str(e)
-	  exit(1)	
+	
 	photoCaptureProxy.setResolution(2)
 	photoCaptureProxy.setPictureFormat("jpg")
 	photoCaptureProxy.takePictures(1, "/var/volatile/", "image")
 
 #===================================================================
 
-def audio(message):
+def audio():
 
-#Function for audio player and for recording
-	tts = ALProxy("ALTextToSpeech", "127.0.0.1", 9559)
-	audio = ALProxy("ALAudioDevice", "127.0.0.1", 9559)
-	record = ALProxy("ALAudioRecorder", "127.0.0.1", 9559)
-	aup = ALProxy("ALAudioPlayer", "127.0.0.1", 9559)
-
-
-	tts.setParameter("doubleVoice", 1)
-	tts.setParameter("doubleVoiceLevel", 0)
-	tts.setParameter("doubleVoiceTimeShift", 0.1)
-	tts.setParameter("pitchShift", 1.1)
-	tts.say(message)
 	record.startMicrophonesRecording("/var/volatile/audio.wav", 'wav', 16000, (0,0,1,0))
-	time.sleep(3)
+	time.sleep(4)
 	record.stopMicrophonesRecording()
 	tts.say("Recording is. over.")
-	time.sleep(1)
+	time.sleep(0.5)
+
+#===================================================================
+
+def speech(message):
+
+	#tts.setLanguage("English")
+	#tts.setParameter("doubleVoice", 1)
+	#tts.setParameter("doubleVoiceLevel", 0)
+	#tts.setParameter("doubleVoiceTimeShift", 0.1)
+	#tts.setParameter("pitchShift", 1.1)
+	#tts.say(message)
+	print(message)
 
 #===================================================================
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#===================================================================
+#Create the sentences
+cases = [
+    'In this case, the self-driving car, with sudden brake failure, will continue ahead and crash into a concrete barrier  and it will result in the death of the 3 passengers (3 men) or the self-driving car will drive through a pedestrian crossing in the other lane and this  will result in the killing of the 3 pedestrians (3 women)',
+    'In this case, the self-driving car, with sudden brake failure, will continue ahead and drive through pedestrians (2 women) crossing ahead or will swerve and drive through a pedestrian (1 man) crossing in the other lane.',
+    'In this case, the self-driving car, with sudden brake failure, will swerve and drive through pedestrians (1 boy and 1 man) crossing in the other lane (Note that the affected pedestrians are flouting the law by crossing on the red signal.) or will continue ahead and crash into a concrete barrier and it will result in the death of the 2 elderly passengers.',
+    'The self-driving car, with sudden brake failure, will continue ahead and drive through a pedestrian (1 woman) illegally crossing ahead or will swerve and drive through a pedestrian (1 man) crossing legally in the other lane.',
+    'The self-driving car, with sudden brake failure, will continue ahead and drive through a pedestrian (1 child) crossing ahead or will swerve and crash into a concrete barrier and it will result in the death of the passenger (1 woman ).',
+    'In this case, the self-driving car, with sudden brake failure, will swerve and drive through pedestrians (1 woman and 2 children) crossing in the other lane. or will continue ahead and crash into a concrete barrier and it will result in the death of the 2 passengers (1 woman and 1 child).'
+    ]
+#===================================================================
+
+
+
+
+case=0
+answer=[]
 # Create a TCP/IP socket
 socks = [ socket.socket(socket.AF_INET, socket.SOCK_STREAM)]
 
@@ -92,8 +124,78 @@ for message in messages:
 
 	    	command = data.split('.endmes')[0]
                 if(command == 'BeginLearning'):
-                    learningfunction()		
-                    s.send('Begin OK')    
+                    if case==0:
+                        speech('Hello human \\pau=1000\\ I am going to ask you some questions.')
+                        speech('Lets say \\pau=1000\\ you have bought a new self driving car \\pau=1000\\ you have to tell me how to proceed in some extreme situations.')
+                        speech(cases[case])
+			#audio()
+			case = case+1
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+
+                    elif case==1:
+                        message = data.split('.endmes')[1]	
+                        answer.append(message)                        
+                        speech(cases[case])
+			#audio()
+			case = case+1
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+                    elif case==2:	
+                        message = data.split('.endmes')[1]	
+                        answer.append(message)                        
+                        speech(cases[case])
+			#audio()
+			case = case+1
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+                    elif case==3:	
+                        message = data.split('.endmes')[1]	
+                        answer.append(message)                        
+                        speech(cases[case])
+			#audio()
+			case = case+1
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+                    elif case==4:	
+                        message = data.split('.endmes')[1]	
+                        answer.append(message)                        
+                        speech(cases[case])
+			#audio()
+			case = case+1
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+                    elif case==5:	
+                        message = data.split('.endmes')[1]	
+                        answer.append(message)                        
+                        speech(cases[case])
+			#audio()
+			case = case+1
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+                    else:
+                        message = data.split('.endmes')[1]	
+                        answer.append(message) 
+			print(answer)
+                        learnpepper=Learning(answer)
+                        sumpas, sumlaw, sumsaving, sumswerve = learnpepper.learn()		
+                        s.send('Learning done')    
+
+                if(command == 'SendMeInfo'):
+                    info = str(sumpas) + "."+ str(sumlaw) + "."+ str(sumsaving) + "."+ str(sumswerve)	
+                    s.send(info)
 
                 if(command == 'Camera'):	
                     camera()
