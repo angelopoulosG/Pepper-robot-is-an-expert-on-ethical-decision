@@ -11,13 +11,27 @@ The aim of this project is to construct an intelligent and integrated system on 
 
 ## Prerequisites (On your computer or server)
 
-* Python 3.7 
+### Python 3.7 
 
 You will need to install the following libraries:
 
-## Enable Pepper
+* SpeechRecognition, Library for performing speech recognition, with support for several engines and APIs, online and offline:
+```
+pip install SpeechRecognition
+```
+
+## How to run it
+
+* Enable the "Brain" from the server:
+
+```
+python3 thebrain.py
+```
+
+* Enable Pepper:
 
 SSH onto the robot and launch the python code using:
+
 ```
 python ethical_pepper.py
 ```
@@ -48,11 +62,6 @@ pip install SpeechRecognition
 ```
 
 
-## Enable Pepper
-
-```
-python listen_and_talk.py
-```
 
 
 -->
