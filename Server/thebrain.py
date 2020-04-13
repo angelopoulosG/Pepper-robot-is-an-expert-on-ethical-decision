@@ -8,7 +8,7 @@ Created on Thu Apr  2 16:01:44 2020
 import socket
 import os
 import cv2
-
+import speech_recognition as sr
 
 
 ###################################################################################################
@@ -22,21 +22,42 @@ def qrcode():
         for i in range(nrOfPoints):
             nextPointIndex = (i+1) % nrOfPoints
             cv2.line(image, tuple(points[i][0]), tuple(points[nextPointIndex][0]), (255,0,0), 5)     
-        print(decodedText)     
+        return decodedText     
 
     else:
-        print("QR code not detected")
+        return 0     
 
 ###################################################################################################
-        
-        
+
+###################################################################################################
+def speech_to_text():
+    
+
+    r = sr.Recognizer()
+    audio = sr.AudioFile('audio.wav')
+    with audio as source:
+        r.adjust_for_ambient_noise(source,duration=0.1)
+        audio = r.record(source)
+    try:
+        message = r.recognize_google(audio)
+    except sr.UnknownValueError:
+        print("Could not understand audio")
+        message = "silence"
+    except sr.RequestError as e:
+        print("Could not understand audio")
+        message = "silence"
+    return  message
+    
+
+    
+###################################################################################################        
         
         
         
         
 HOST = '192.168.1.14'  # Standard loopback interface address (localhost)
 PORT = 10001        # Port to listen on (non-privileged ports are > 1023)
-camera,audio= 0,0
+camera,audio,case,info= 0,0,0,0
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
@@ -49,12 +70,18 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 break
             if data == b'Ready':
                 conn.sendall(b"BeginLearning.endmes")
-            elif data == b'Begin OK':
-                conn.sendall(b"Voice.endmes Hello how are you?")
                 audio=1
-            elif data == b'Hands OK':
-                conn.sendall(b"Stop.endmes")
+
+
+            elif data == b'Learning done':
+                conn.sendall(b"SendMeInfo.endmes")
+                audio=0
+                info=1                
+                
+                
+                
             else:
+                ##############################################################
                 if audio == 1:
                     length=int(data)
                     conn.sendall(b"ContinueWithVoice.endmes")                    
@@ -65,10 +92,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     t.close()
                     bytes = os.stat('audio.wav').st_size
                     if bytes == length:
-                        audio = 0                   
-                        #os.remove("audio.wav")
-                        conn.sendall(b"Camera.endmes")
-                        camera=1                
+                        audio = 1
+                        message=speech_to_text()
+                        os.remove("audio.wav")
+                        mystring= "BeginLearning.endmes" + "first"
+                        string = mystring.encode('utf-8')
+                        conn.sendall(string)
+                ##############################################################                      
+                        
                 elif camera == 1:
                     length=int(data)
                     conn.sendall(b"ContinueWithCamera.endmes")                    
@@ -81,10 +112,24 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
                     if bytes == length:
                         camera = 0                   
-                        qrcode()
+                        text=qrcode()
                         os.remove("image.jpg")
                         conn.sendall(b"Hands.endmes")
-                
+                ##############################################################
+                elif info ==1:
+                    data=data.decode('utf-8')
+                    sumpas = int(data.split('.')[0])  
+                    sumlaw = int(data.split('.')[1])
+                    sumsaving = int(data.split('.')[2])
+                    sumswerve = int(data.split('.')[3])
+                    if (sumpas == sumlaw) or (sumpas == sumsaving) or (sumsaving == sumlaw) or (sumswerve == sumlaw) or (sumswerve == sumsaving) or (sumswerve == sumpas):
+                        print(sumpas)
+                        print(sumlaw)
+                        print(sumsaving)
+                        print(sumswerve)
+                    info =0
+                    conn.sendall(b"Stop.endmes")
+                        
                 else:
                     print("hi")
                
