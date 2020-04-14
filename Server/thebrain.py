@@ -9,7 +9,90 @@ import socket
 import os
 import cv2
 import speech_recognition as sr
+from learning import Learning
 
+
+
+
+###################################################################################################
+def checklearning(pas, law, saving, swerve): 
+
+
+    if pas == law:
+        return '0'
+    elif pas == saving:
+        return '1'
+    elif saving == law:
+        return '2'
+    elif swerve == law:
+        return '3'
+    elif swerve == saving:
+        return '4'
+    elif swerve == pas:
+        return '5' 
+    else:
+        return 'ok'
+         
+        
+def learningmore(pas, law, saving, swerve, answer):
+  
+
+    if pas == law:        
+        if  answer == 'y':
+            pas=pas+1
+            law=law-1                
+        else:
+            pas=pas-1
+            law=law+1
+
+    elif pas == saving:        
+        if  answer == 'y':
+            pas=pas+1
+            saving=saving-1                
+        else:
+            pas=pas-1
+            saving=saving+1
+
+    elif saving == law:
+        if  answer == 'y':
+            saving=saving-1
+            law=law+1
+            
+        else:
+            saving=saving+1
+            law=law-1
+        
+    elif swerve == law:
+        if  answer == 'y':
+            swerve=swerve-1
+            law=law+1
+            
+        else:
+            swerve=swerve+1
+            law=law-1
+            
+    elif swerve == saving:
+        if  answer == 'y':
+            swerve=swerve-1
+            saving=saving+1
+            
+        else:
+            swerve=swerve+1
+            saving=saving-1
+        
+    elif swerve == pas:
+        if  answer == 'y':
+            swerve=swerve-1
+            pas=pas+1
+            
+        else:
+            swerve=swerve+1
+            pas=pas-1
+            
+    else:
+        return pas, law, saving, swerve  
+    return pas, law, saving, swerve
+###################################################################################################
 
 ###################################################################################################
 def qrcode(): 
@@ -43,9 +126,7 @@ def speech_to_text():
     except sr.UnknownValueError:
         print("Could not understand audio")
         message = "silence"
-    except sr.RequestError as e:
-        print("Could not understand audio")
-        message = "silence"
+
     return  message
     
 
@@ -58,6 +139,7 @@ def speech_to_text():
 HOST = '192.168.1.14'  # Standard loopback interface address (localhost)
 PORT = 10001        # Port to listen on (non-privileged ports are > 1023)
 camera,audio,case,info= 0,0,0,0
+pas, law, saving, swerve =0,0,0,0
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
@@ -71,12 +153,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if data == b'Ready':
                 conn.sendall(b"BeginLearning.endmes")
                 audio=1
+                learn=1
 
 
             elif data == b'Learning done':
                 conn.sendall(b"SendMeInfo.endmes")
                 audio=0
-                info=1                
+                info=1     
+                learn=0
                 
                 
                 
@@ -94,10 +178,25 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     if bytes == length:
                         audio = 1
                         message=speech_to_text()
+                        message = "first" #remove this
                         os.remove("audio.wav")
-                        mystring= "BeginLearning.endmes" + "first"
-                        string = mystring.encode('utf-8')
-                        conn.sendall(string)
+                        if learn == 1 :
+                            mystring= "BeginLearning.endmes" + message 
+                            string = mystring.encode('utf-8')
+                            conn.sendall(string)
+                        if learn ==2 :
+                            message = 'y' #remove this
+                            pas, law, saving, swerve =learningmore(pas, law, saving, swerve, message)
+                            check = checklearning(pas, law, saving, swerve)
+                            if check != 'ok':
+                                mystring= "LearnMore.endmes" + check
+                                string = mystring.encode('utf-8')
+                                conn.sendall(string)
+                                learn=2
+                            else:  
+                                print(pas, law, saving, swerve)
+                                conn.sendall(b"Stop.endmes")                            
+                            
                 ##############################################################                      
                         
                 elif camera == 1:
@@ -117,18 +216,22 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         conn.sendall(b"Hands.endmes")
                 ##############################################################
                 elif info ==1:
-                    data=data.decode('utf-8')
-                    sumpas = int(data.split('.')[0])  
-                    sumlaw = int(data.split('.')[1])
-                    sumsaving = int(data.split('.')[2])
-                    sumswerve = int(data.split('.')[3])
-                    if (sumpas == sumlaw) or (sumpas == sumsaving) or (sumsaving == sumlaw) or (sumswerve == sumlaw) or (sumswerve == sumsaving) or (sumswerve == sumpas):
-                        print(sumpas)
-                        print(sumlaw)
-                        print(sumsaving)
-                        print(sumswerve)
-                    info =0
-                    conn.sendall(b"Stop.endmes")
+                    data=eval(data.decode('utf-8'))
+                    learnpepper=Learning(data)
+                    pas, law, saving, swerve = learnpepper.learn()
+
+                    check = checklearning(pas, law, saving, swerve)
+
+                    if check != 'ok':
+                        mystring= "LearnMore.endmes" + check
+                        string = mystring.encode('utf-8')
+                        conn.sendall(string)
+                        learn=2
+                        audio=1
+                        info=0
+                    else: 
+                        print(pas, law, saving, swerve)
+                        conn.sendall(b"Stop.endmes")
                         
                 else:
                     print("hi")
