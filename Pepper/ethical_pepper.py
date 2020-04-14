@@ -5,7 +5,7 @@ Created on Thu Apr  2 16:01:44 2020
 @author: Georgios Angelopoulos
 """
 
-from learning import Learning
+
 import socket
 import sys
 import os
@@ -81,19 +81,28 @@ def speech(message):
 #===================================================================
 #Create the sentences
 cases = [
-    'In this case, the self-driving car, with sudden brake failure, will continue ahead and crash into a concrete barrier  and it will result in the death of the 3 passengers (3 men) or the self-driving car will drive through a pedestrian crossing in the other lane and this  will result in the killing of the 3 pedestrians (3 women)',
-    'In this case, the self-driving car, with sudden brake failure, will continue ahead and drive through pedestrians (2 women) crossing ahead or will swerve and drive through a pedestrian (1 man) crossing in the other lane.',
-    'In this case, the self-driving car, with sudden brake failure, will swerve and drive through pedestrians (1 boy and 1 man) crossing in the other lane (Note that the affected pedestrians are flouting the law by crossing on the red signal.) or will continue ahead and crash into a concrete barrier and it will result in the death of the 2 elderly passengers.',
-    'The self-driving car, with sudden brake failure, will continue ahead and drive through a pedestrian (1 woman) illegally crossing ahead or will swerve and drive through a pedestrian (1 man) crossing legally in the other lane.',
-    'The self-driving car, with sudden brake failure, will continue ahead and drive through a pedestrian (1 child) crossing ahead or will swerve and crash into a concrete barrier and it will result in the death of the passenger (1 woman ).',
-    'In this case, the self-driving car, with sudden brake failure, will swerve and drive through pedestrians (1 woman and 2 children) crossing in the other lane. or will continue ahead and crash into a concrete barrier and it will result in the death of the 2 passengers (1 woman and 1 child).'
-    ]
+	'In this case, the self-driving car, with sudden brake failure, will continue ahead and crash into a concrete barrier  and it will result in the death of the 3 passengers (3 men) or the self-driving car will drive through a pedestrian crossing in the other lane and this  will result in the killing of the 3 pedestrians (3 women)',
+    	'In this case, the self-driving car, with sudden brake failure, will continue ahead and drive through pedestrians (2 women) crossing ahead or will swerve and drive through a pedestrian (1 man) crossing in the other lane.',
+    	'In this case, the self-driving car, with sudden brake failure, will swerve and drive through pedestrians (1 boy and 1 man) crossing in the other lane (Note that the affected pedestrians are flouting the law by crossing on the red signal.) or will continue ahead and crash into a concrete barrier and it will result in the death of the 2 elderly passengers.',
+    	'The self-driving car, with sudden brake failure, will continue ahead and drive through a pedestrian (1 woman) illegally crossing ahead or will swerve and drive through a pedestrian (1 man) crossing legally in the other lane.',
+    	'The self-driving car, with sudden brake failure, will continue ahead and drive through a pedestrian (1 child) crossing ahead or will swerve and crash into a concrete barrier and it will result in the death of the passenger (1 woman ).',
+    	'In this case, the self-driving car, with sudden brake failure, will swerve and drive through pedestrians (1 woman and 2 children) crossing in the other lane. or will continue ahead and crash into a concrete barrier and it will result in the death of the 2 passengers (1 woman and 1 child).'
+	]
 #===================================================================
 
+morecases = [
+	"The self-driving car, with sudden brake failure, will drive through a pedestrian crossing in the lane legally and will save the passenger.",
+	"The self-driving car, with sudden brake failure, will drive through two pedestrians crossing and will save the passenger.",
+	"The self-driving car, with sudden brake failure, will drive through three pedestrian crossing in the lane ilegally and will save another pedestrian who is crossing legally.",
+	"The self-driving car, with sudden brake failure, will swerve and drive through a pedestrian crossing in the other lane ilegally and will save another pedestrian who is crossing your lane legally.",
+	"The self-driving car, with sudden brake failure, will swerve and drive through a pedestrian crossing in the other lane and will save three pedestrians who is crossing your lane.",
+	"The self-driving car, with sudden brake failure, will swerve and drive through a pedestrian crossing in the other lane and will save the passenger."
+	]
 
 
 
 case=0
+morecase=0
 answer=[]
 # Create a TCP/IP socket
 socks = [ socket.socket(socket.AF_INET, socket.SOCK_STREAM)]
@@ -189,13 +198,74 @@ for message in messages:
                         message = data.split('.endmes')[1]	
                         answer.append(message) 
 			print(answer)
-                        learnpepper=Learning(answer)
-                        sumpas, sumlaw, sumsaving, sumswerve = learnpepper.learn()		
+		
                         s.send('Learning done')    
 
+
+
+
+                if(command == 'LearnMore'):
+		    morecase = int(data.split('.endmes')[1])
+                    if morecase==0:
+                        speech(morecases[morecase])
+                        speech('Do you agree?')                        
+			#audio()
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+
+                    elif morecase==1:	
+                        speech(morecases[morecase])
+			#audio()
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+                    elif morecase==2:		                       
+                        speech(morecases[morecase])
+			#audio()
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+                    elif morecase==3:	
+                        speech(morecases[morecase])
+			#audio()
+			case = case+1
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+                    elif morecase==4:	
+                        speech(morecases[morecase])
+			#audio()
+			case = case+1
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+                    elif morecase==5:	
+                        speech(morecases[morecase])
+			#audio()
+			case = case+1
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+                    else:
+                        speech(morecases[morecase])
+			#audio()
+			case = case+1
+			voice = "/var/volatile/audio.wav"
+			bytes = open(voice).read()	
+			s.send(str(len(bytes)))
+
+
+
                 if(command == 'SendMeInfo'):
-                    info = str(sumpas) + "."+ str(sumlaw) + "."+ str(sumsaving) + "."+ str(sumswerve)	
-                    s.send(info)
+                    #info = str(sumpas) + "."+ str(sumlaw) + "."+ str(sumsaving) + "."+ str(sumswerve)	
+                    s.send(str(answer))
 
                 if(command == 'Camera'):	
                     camera()
@@ -205,8 +275,8 @@ for message in messages:
 
                 if(command == 'Voice'):	
                     message = data.split('.endmes')[1]
-                    print(message)	
-                    audio(message)			
+                    speech(message)	
+                    audio()			
                     voice = "/var/volatile/audio.wav"
                     bytes = open(voice).read()	
                     s.send(str(len(bytes)))	
@@ -222,7 +292,7 @@ for message in messages:
                     s.send("Hands OK")    
     
                 if(command == 'Stop'):
-                    print("bye")                    
+                    speech("bye")                    
                     break
 
 
