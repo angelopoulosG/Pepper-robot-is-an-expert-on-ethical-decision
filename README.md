@@ -26,7 +26,7 @@ pip install SpeechRecognition
 
 Pepper is a semi-humanoid robot manufactured by SoftBank Robotics (formerly Aldebaran Robotics)
 
-#### Stable Internet Connection
+
 
 ## How to run it
 
