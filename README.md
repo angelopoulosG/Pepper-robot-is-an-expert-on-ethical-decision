@@ -36,6 +36,11 @@ SSH onto the robot and launch the python code using:
 python ethical_pepper.py
 ```
 
+
+## Ethical Dilemmas
+
+![GitHub Logo](/Dilemmas/case_No1.png)
+
 ## Master Student
 
 [**Georgios Angelopoulos**](https://www.linkedin.com/in/george-angelopoulos/)
