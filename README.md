@@ -12,16 +12,17 @@ The aim of this project is to construct an intelligent and integrated system on 
 
 <img src="/images/system_architecture.png" width="600">
 
-## Prerequisites (On your computer or server)
+## Prerequisites 
 
-#### Python 3.7 
+#### Python 3 (On your computer or server)
 
-You will need to install the following libraries:
+With the following libraries installed
 
 * SpeechRecognition, Library for performing speech recognition:
 ```
 pip install SpeechRecognition
 ```
+#### Pepper Robot
 
 ## How to run it
 
