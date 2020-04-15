@@ -14,7 +14,7 @@ The aim of this project is to construct an intelligent and integrated system on 
 
 ## Prerequisites 
 
-#### Python 3 (On your computer or server)
+#### Python 3 (On your computer/server)
 
 With the following libraries installed
 
@@ -30,15 +30,17 @@ Pepper is a semi-humanoid robot manufactured by SoftBank Robotics (formerly Alde
 
 ## How to run it
 
-* First, Enable the "Brain" from the server:
+* First, download all the code from the folder **Server** to your computer/server.
+* Go to "thebrain.py" and change the **line 16** with your IP.
+* Finally, Enable the "Brain":
 
 ```
 python3 thebrain.py
 ```
 
-* After enabling the server, Enable Pepper:
-
-SSH onto the robot and launch the python code using:
+* After enabling the server, SH onto the robot and download all the code from the folder **Pepper**.
+* Go to "thebrain.py" and change the **line 16** with your server's IP.
+* Finally, Enable Pepper:
 
 ```
 python ethical_pepper.py
