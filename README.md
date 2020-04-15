@@ -9,7 +9,6 @@ The aim of this project is to construct an intelligent and integrated system on 
 
 ## System Architecture
 
-An example of an ethical dilemma which Pepper should answer.
 
 <img src="/images/system_architecture.png" width="600">
 
