@@ -36,6 +36,13 @@ SSH onto the robot and launch the python code using:
 python ethical_pepper.py
 ```
 
+
+## Ethical Dilemmas
+
+An example of an ethical dilemma which Pepper should answer.
+
+![case1](/Dilemmas/case_No1.png)
+
 ## Master Student
 
 [**Georgios Angelopoulos**](https://www.linkedin.com/in/george-angelopoulos/)
