@@ -22,13 +22,13 @@ pip install SpeechRecognition
 
 ## How to run it
 
-* Enable the "Brain" from the server:
+* First Enable the "Brain" from the server:
 
 ```
 python3 thebrain.py
 ```
 
-* Enable Pepper:
+* After enabling the server, Enable Pepper:
 
 SSH onto the robot and launch the python code using:
 
