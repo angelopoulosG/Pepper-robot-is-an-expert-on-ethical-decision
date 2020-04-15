@@ -45,7 +45,7 @@ python ethical_pepper.py
 
 An example of an ethical dilemma which Pepper should answer.
 
-![case1](/images/Dilemmas/case_no1.png)
+![case1](/images/Dilemmas/case_no1.png){:height="36px" width="36px"}
 
 ## Master Student
 
