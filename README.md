@@ -11,8 +11,7 @@ The aim of this project is to construct an intelligent and integrated system on 
 
 An example of an ethical dilemma which Pepper should answer.
 
-![case1](/images/system_architecture.png)
-
+<img src="/images/system_architecture.png" width="48">
 
 ## Prerequisites (On your computer or server)
 
@@ -45,7 +44,7 @@ python ethical_pepper.py
 
 An example of an ethical dilemma which Pepper should answer.
 
-![case1](/images/Dilemmas/case_no1.png){:height="36px" width="36px"}
+![case1](/images/Dilemmas/case_no1.png)
 
 ## Master Student
 
