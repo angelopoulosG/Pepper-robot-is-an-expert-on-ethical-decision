@@ -15,7 +15,7 @@ The aim of this project is to construct an intelligent and integrated system on 
 
 You will need to install the following libraries:
 
-* SpeechRecognition, Library for performing speech recognition, with support for several engines and APIs, online and offline:
+* SpeechRecognition, Library for performing speech recognition:
 ```
 pip install SpeechRecognition
 ```
