@@ -7,6 +7,11 @@ The aim of this project is to construct an intelligent and integrated system on 
 [Universitat Pompeu Fabra, Barcelona, Spain.](https://www.upf.edu/)
 
 
+## System Architecture
+
+An example of an ethical dilemma which Pepper should answer.
+
+![case1](/images/system_architecture.png)
 
 
 ## Prerequisites (On your computer or server)
@@ -36,12 +41,11 @@ SSH onto the robot and launch the python code using:
 python ethical_pepper.py
 ```
 
-
 ## Ethical Dilemmas
 
 An example of an ethical dilemma which Pepper should answer.
 
-![case1](/Dilemmas/case_no1.png)
+![case1](/images/Dilemmas/case_no1.png)
 
 ## Master Student
 
