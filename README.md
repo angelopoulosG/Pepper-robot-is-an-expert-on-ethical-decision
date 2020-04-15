@@ -22,7 +22,7 @@ pip install SpeechRecognition
 
 ## How to run it
 
-* First Enable the "Brain" from the server:
+* First, Enable the "Brain" from the server:
 
 ```
 python3 thebrain.py
