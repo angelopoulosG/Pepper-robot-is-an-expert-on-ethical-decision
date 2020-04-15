@@ -13,6 +13,9 @@ from learning import Learning
 
 
 
+HOST = '192.168.1.14'  #you should change this
+
+
 
 ###################################################################################################
 def checklearning(pas, law, saving, swerve): 
@@ -127,6 +130,20 @@ def speech_to_text():
         print("Could not understand audio")
         message = "silence"
 
+
+
+    if 'yes' in message:
+        message='yes'
+    elif 'no' in message:
+        message='no'
+    elif 'first' in message:
+        message='first'
+    elif 'second' in message:
+        message='second'
+    else:
+        message = "silence"
+
+      
     return  message
     
 
@@ -136,7 +153,9 @@ def speech_to_text():
         
         
         
-HOST = '192.168.1.14'  # Standard loopback interface address (localhost)
+
+
+
 PORT = 10001        # Port to listen on (non-privileged ports are > 1023)
 camera,audio,case,info= 0,0,0,0
 pas, law, saving, swerve =0,0,0,0
@@ -178,14 +197,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     if bytes == length:
                         audio = 1
                         message=speech_to_text()
-                        message = "first" #remove this
+                        if message=="silence":
+                            conn.sendall(b"Stop.endmes")
                         os.remove("audio.wav")
                         if learn == 1 :
                             mystring= "BeginLearning.endmes" + message 
                             string = mystring.encode('utf-8')
                             conn.sendall(string)
                         if learn ==2 :
-                            message = 'y' #remove this
                             pas, law, saving, swerve =learningmore(pas, law, saving, swerve, message)
                             check = checklearning(pas, law, saving, swerve)
                             if check != 'ok':
