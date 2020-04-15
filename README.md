@@ -38,7 +38,7 @@ Pepper is a semi-humanoid robot manufactured by SoftBank Robotics (formerly Alde
 python3 thebrain.py
 ```
 
-* After enabling the server, SH onto the robot and download all the code from the folder **Pepper**.
+* After enabling the server, SSH onto the robot and download all the code from the folder **Pepper**.
 * Go to **ethical_pepper.py** and change the **line 16** with your server's IP.
 * Finally, Enable Pepper:
 
