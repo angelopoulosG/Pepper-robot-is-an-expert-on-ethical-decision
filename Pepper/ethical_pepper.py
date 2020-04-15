@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Apr  2 16:01:44 2020
+Created on Thu Apr  2 10:01:44 2020
 
 @author: Georgios Angelopoulos
 """
@@ -9,11 +9,11 @@ Created on Thu Apr  2 16:01:44 2020
 import socket
 import sys
 import os
-#from naoqi import ALProxy
+from naoqi import ALProxy
 
 
 
-serverIp = "192.168.1.14"
+serverIp = "192.168.1.14" #you should change this
 
 
 messages = ['']
@@ -52,13 +52,13 @@ def audio():
 
 def speech(message):
 
-	#tts.setLanguage("English")
-	#tts.setParameter("doubleVoice", 1)
-	#tts.setParameter("doubleVoiceLevel", 0)
-	#tts.setParameter("doubleVoiceTimeShift", 0.1)
-	#tts.setParameter("pitchShift", 1.1)
-	#tts.say(message)
-	print(message)
+	tts.setLanguage("English")
+	tts.setParameter("doubleVoice", 1)
+	tts.setParameter("doubleVoiceLevel", 0)
+	tts.setParameter("doubleVoiceTimeShift", 0.1)
+	tts.setParameter("pitchShift", 1.1)
+	tts.say(message)
+	#print(message)
 
 #===================================================================
 
@@ -66,9 +66,44 @@ def speech(message):
 
 
 
+	
+	
+	
+	
 
 
 
+#===================================================================
+try:
+        tts = ALProxy("ALTextToSpeech", "127.0.0.1", 9559)
+except Exception, a:
+        print "Could not create proxy to ALTextToSpeech"
+        print "Error was: ", a
+#===================================================================
+try:
+        audio = ALProxy("ALAudioDevice", "127.0.0.1", 9559)
+except Exception, b:
+        print "Could not create proxy to ALAudioDevice"
+        print "Error was: ", b
+#===================================================================
+try:
+        record = ALProxy("ALAudioRecorder", "127.0.0.1", 9559)
+except Exception, c:
+        print "Could not create proxy to ALAudioRecorder"
+        print "Error was: ", c
+#===================================================================
+try:
+        aup = ALProxy("ALAudioPlayer", "127.0.0.1", 9559)
+except Exception, d:
+        print "Could not create proxy to ALAudioPlayer"
+        print "Error was: ", d
+#===================================================================
+try:
+        photoCaptureProxy = ALProxy("ALPhotoCapture", "127.0.0.1", 9559)
+except Exception, e:
+        print "Could not create proxy to ALPhotoCapture"
+        print "Error was: ", e
+#===================================================================
 
 
 
@@ -81,22 +116,22 @@ def speech(message):
 #===================================================================
 #Create the sentences
 cases = [
-	'In this case, the self-driving car, with sudden brake failure, will continue ahead and crash into a concrete barrier  and it will result in the death of the 3 passengers (3 men) or the self-driving car will drive through a pedestrian crossing in the other lane and this  will result in the killing of the 3 pedestrians (3 women)',
-    	'In this case, the self-driving car, with sudden brake failure, will continue ahead and drive through pedestrians (2 women) crossing ahead or will swerve and drive through a pedestrian (1 man) crossing in the other lane.',
-    	'In this case, the self-driving car, with sudden brake failure, will swerve and drive through pedestrians (1 boy and 1 man) crossing in the other lane (Note that the affected pedestrians are flouting the law by crossing on the red signal.) or will continue ahead and crash into a concrete barrier and it will result in the death of the 2 elderly passengers.',
-    	'The self-driving car, with sudden brake failure, will continue ahead and drive through a pedestrian (1 woman) illegally crossing ahead or will swerve and drive through a pedestrian (1 man) crossing legally in the other lane.',
-    	'The self-driving car, with sudden brake failure, will continue ahead and drive through a pedestrian (1 child) crossing ahead or will swerve and crash into a concrete barrier and it will result in the death of the passenger (1 woman ).',
-    	'In this case, the self-driving car, with sudden brake failure, will swerve and drive through pedestrians (1 woman and 2 children) crossing in the other lane. or will continue ahead and crash into a concrete barrier and it will result in the death of the 2 passengers (1 woman and 1 child).'
+	'the self-driving car \\pau=500\\ with sudden brake failure \\pau=500\\ will continue ahead and crash into a concrete barrier \\pau=1000\\ this will result in the death of the 3 passengers \\pau=500\\ or the self-driving car will drive through a pedestrian crossing in the other lane \\pau=500\\ and this  will result in the killing of the 3 pedestrians ',
+    	'Now, the self-driving car \\pau=1000\\ with sudden brake failure \\pau=500\\  will continue ahead and drive through pedestrians, 2 women, crossing ahead \\pau=500\\ or will swerve and drive through a pedestrian, 1 man, \\pau=500\\  crossing in the other lane.',
+    	'In this case, the self-driving car \\pau=1000\\  with sudden brake failure, will swerve and drive through pedestrians, 1 boy and 1 man, crossing in the other lane \\pau=500\\ Please Note that the affected pedestrians are flouting the law by crossing on the red signal \\pau=1000\\  or will continue ahead and crash into a concrete barrier and it will result in the death of the 2 elderly passengers.',
+    	'In this case, The self-driving car \\pau=1000\\  with sudden brake failure, will continue ahead and drive through a pedestrian, 1 woman \\pau=500\\ illegally crossing ahead \\pau=500\\ or will swerve and drive through a pedestrian, 1 man, crossing legally in the other lane.',
+    	'Now, The self-driving car \\pau=1000\\  with sudden brake failure  will continue ahead and drive through a pedestrian,1 child, crossing ahead \\pau=500\\ or will swerve and crash into a concrete barrier \\pau=500\\ and it will result in the death of the passenger 1 woman.',
+    	'In this case, the self-driving car \\pau=1000\\  with sudden brake failure, will swerve and drive through pedestrians, 1 woman and 2 children, crossing in the other lane \\pau=500\\ or will continue ahead and crash into a concrete barrier \\pau=500\\ and it will result in the death of the 2 passengers, 1 woman and 1 child.'
 	]
 #===================================================================
 
 morecases = [
-	"The self-driving car, with sudden brake failure, will drive through a pedestrian crossing in the lane legally and will save the passenger.",
-	"The self-driving car, with sudden brake failure, will drive through two pedestrians crossing and will save the passenger.",
-	"The self-driving car, with sudden brake failure, will drive through three pedestrian crossing in the lane ilegally and will save another pedestrian who is crossing legally.",
-	"The self-driving car, with sudden brake failure, will swerve and drive through a pedestrian crossing in the other lane ilegally and will save another pedestrian who is crossing your lane legally.",
-	"The self-driving car, with sudden brake failure, will swerve and drive through a pedestrian crossing in the other lane and will save three pedestrians who is crossing your lane.",
-	"The self-driving car, with sudden brake failure, will swerve and drive through a pedestrian crossing in the other lane and will save the passenger."
+	"The self-driving car \\pau=500\\ with sudden brake failure \\pau=500\\ will drive through a pedestrian crossing in the lane legally and will save the passenger.",
+	"The self-driving car \\pau=500\\ with sudden brake failure \\pau=500\\ will drive through two pedestrians crossing and will save the passenger.",
+	"The self-driving car \\pau=500\\ with sudden brake failure \\pau=500\\ will drive through three pedestrian crossing in the lane ilegally and will save another pedestrian who is crossing legally.",
+	"The self-driving car\\pau=500\\ with sudden brake failure \\pau=500\\ will swerve and drive through a pedestrian crossing in the other lane ilegally and will save another pedestrian who is crossing your lane legally.",
+	"The self-driving \\pau=500\\ with sudden brake failure \\pau=500\\ will swerve and drive through a pedestrian crossing in the other lane and will save three pedestrians who is crossing your lane.",
+	"The self-driving car \\pau=500\\ with sudden brake failure \\pau=500\\ will swerve and drive through a pedestrian crossing in the other lane and will save the passenger."
 	]
 
 
@@ -135,9 +170,10 @@ for message in messages:
                 if(command == 'BeginLearning'):
                     if case==0:
                         speech('Hello human \\pau=1000\\ I am going to ask you some questions.')
-                        speech('Lets say \\pau=1000\\ you have bought a new self driving car \\pau=1000\\ you have to tell me how to proceed in some extreme situations.')
+                        speech('Lets say \\pau=500\\ you have bought a new self driving car \\pau=500\\ you have to tell me how to proceed in some extreme situations.')
                         speech(cases[case])
-			#audio()
+                        speech('What do you choose? First or second option?')
+			audio()
 			case = case+1
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
@@ -148,7 +184,8 @@ for message in messages:
                         message = data.split('.endmes')[1]	
                         answer.append(message)                        
                         speech(cases[case])
-			#audio()
+                        speech('What do you choose? First or second option?')
+			audio()
 			case = case+1
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
@@ -158,7 +195,8 @@ for message in messages:
                         message = data.split('.endmes')[1]	
                         answer.append(message)                        
                         speech(cases[case])
-			#audio()
+                        speech('What do you choose? First or second option?')
+			audio()
 			case = case+1
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
@@ -168,7 +206,8 @@ for message in messages:
                         message = data.split('.endmes')[1]	
                         answer.append(message)                        
                         speech(cases[case])
-			#audio()
+                        speech('What do you choose? First or second option?')
+			audio()
 			case = case+1
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
@@ -178,7 +217,8 @@ for message in messages:
                         message = data.split('.endmes')[1]	
                         answer.append(message)                        
                         speech(cases[case])
-			#audio()
+                        speech('What do you choose? First or second option?')
+			audio()
 			case = case+1
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
@@ -188,7 +228,8 @@ for message in messages:
                         message = data.split('.endmes')[1]	
                         answer.append(message)                        
                         speech(cases[case])
-			#audio()
+                        speech('What do you choose? First or second option?')
+			audio()
 			case = case+1
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
@@ -196,9 +237,7 @@ for message in messages:
 
                     else:
                         message = data.split('.endmes')[1]	
-                        answer.append(message) 
-			print(answer)
-		
+                        answer.append(message) 		
                         s.send('Learning done')    
 
 
@@ -209,7 +248,7 @@ for message in messages:
                     if morecase==0:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
-			#audio()
+			audio()
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
 			s.send(str(len(bytes)))
@@ -217,21 +256,24 @@ for message in messages:
 
                     elif morecase==1:	
                         speech(morecases[morecase])
-			#audio()
+                        speech('Do you agree?')
+			audio()
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
 			s.send(str(len(bytes)))
 
                     elif morecase==2:		                       
                         speech(morecases[morecase])
-			#audio()
+                        speech('Do you agree?')
+			audio()
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
 			s.send(str(len(bytes)))
 
                     elif morecase==3:	
                         speech(morecases[morecase])
-			#audio()
+                        speech('Do you agree?')
+			audio()
 			case = case+1
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
@@ -239,7 +281,8 @@ for message in messages:
 
                     elif morecase==4:	
                         speech(morecases[morecase])
-			#audio()
+                        speech('Do you agree?')
+			audio()
 			case = case+1
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
@@ -247,7 +290,8 @@ for message in messages:
 
                     elif morecase==5:	
                         speech(morecases[morecase])
-			#audio()
+                        speech('Do you agree?')
+			audio()
 			case = case+1
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
@@ -255,7 +299,8 @@ for message in messages:
 
                     else:
                         speech(morecases[morecase])
-			#audio()
+                        speech('Do you agree?')
+			audio()
 			case = case+1
 			voice = "/var/volatile/audio.wav"
 			bytes = open(voice).read()	
@@ -263,8 +308,7 @@ for message in messages:
 
 
 
-                if(command == 'SendMeInfo'):
-                    #info = str(sumpas) + "."+ str(sumlaw) + "."+ str(sumsaving) + "."+ str(sumswerve)	
+                if(command == 'SendMeInfo'):	
                     s.send(str(answer))
 
                 if(command == 'Camera'):	
