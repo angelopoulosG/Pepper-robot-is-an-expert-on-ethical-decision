@@ -7,9 +7,11 @@ Created on Thu Apr  2 10:01:44 2020
 
 
 import socket
-import sys
 import os
 from naoqi import ALProxy
+import qi
+import sys
+import time
 
 
 
@@ -40,7 +42,7 @@ def camera():
 
 #===================================================================
 
-def audio():
+def listen():
 
 	record.startMicrophonesRecording("/var/volatile/audio.wav", 'wav', 16000, (0,0,1,0))
 	time.sleep(4)
@@ -105,7 +107,10 @@ except Exception, e:
         print "Error was: ", e
 #===================================================================
 
-
+session = qi.Session()
+session.connect("tcp://127.0.0.1:9559")
+tabletService = session.service("ALTabletService")
+tabletService.enableWifi()
 
 
 
@@ -171,69 +176,81 @@ for message in messages:
                     if case==0:
                         speech('Hello human \\pau=1000\\ I am going to ask you some questions.')
                         speech('Lets say \\pau=500\\ you have bought a new self driving car \\pau=500\\ you have to tell me how to proceed in some extreme situations.')
+                        tabletService.showWebview("https://drive.google.com/file/d/1YHss1CLO0T2xgl_BSL_s8-_x7Ia8SSQg/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option?')
-			audio()
-			case = case+1
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+                        tabletService.hideWebview()
+            			case = case+1
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
 
                     elif case==1:
                         message = data.split('.endmes')[1]	
-                        answer.append(message)                        
+                        answer.append(message) 
+                        tabletService.showWebview("https://drive.google.com/file/d/1GgqzzFHqkfnAoG89fU6uhjJeGcmu9T5b/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option?')
-			audio()
-			case = case+1
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+                        tabletService.hideWebview()                        
+            			case = case+1
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
                     elif case==2:	
                         message = data.split('.endmes')[1]	
-                        answer.append(message)                        
+                        answer.append(message)  
+                        tabletService.showWebview("https://drive.google.com/file/d/1Nx4FXm0cDbipWarYFPiOpaQhDLakRbqq/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option?')
-			audio()
-			case = case+1
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+                        tabletService.hideWebview()
+            			case = case+1
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
                     elif case==3:	
                         message = data.split('.endmes')[1]	
-                        answer.append(message)                        
+                        answer.append(message)
+                        tabletService.showWebview("https://drive.google.com/file/d/1dWBjWWDupKgYwDNrxQuXpUh7-zNWZX5e/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option?')
-			audio()
-			case = case+1
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+                        tabletService.hideWebview()
+            			case = case+1
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
                     elif case==4:	
                         message = data.split('.endmes')[1]	
-                        answer.append(message)                        
+                        answer.append(message)
+                        tabletService.showWebview("https://drive.google.com/file/d/1LPmb5_BkI2AJc8SGjEv5v3PpWaQtJ68w/preview")                        
                         speech(cases[case])
                         speech('What do you choose? First or second option?')
-			audio()
-			case = case+1
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+                        tabletService.hideWebview()
+            			case = case+1
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
                     elif case==5:	
                         message = data.split('.endmes')[1]	
-                        answer.append(message)                        
+                        answer.append(message)
+                        tabletService.showWebview("https://drive.google.com/file/d/1HpOrw4CMnxt68JUOW0IyhXq-5cFoHL36/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option?')
-			audio()
-			case = case+1
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+                        tabletService.hideWebview()
+            			case = case+1
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
                     else:
                         message = data.split('.endmes')[1]	
@@ -244,67 +261,67 @@ for message in messages:
 
 
                 if(command == 'LearnMore'):
-		    morecase = int(data.split('.endmes')[1])
+        		    morecase = int(data.split('.endmes')[1])
                     if morecase==0:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
-			audio()
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
 
                     elif morecase==1:	
                         speech(morecases[morecase])
                         speech('Do you agree?')
-			audio()
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
                     elif morecase==2:		                       
                         speech(morecases[morecase])
                         speech('Do you agree?')
-			audio()
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
                     elif morecase==3:	
                         speech(morecases[morecase])
                         speech('Do you agree?')
-			audio()
-			case = case+1
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+            			case = case+1
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
                     elif morecase==4:	
                         speech(morecases[morecase])
                         speech('Do you agree?')
-			audio()
-			case = case+1
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+            			case = case+1
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
                     elif morecase==5:	
                         speech(morecases[morecase])
                         speech('Do you agree?')
-			audio()
-			case = case+1
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+            			case = case+1
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
                     else:
                         speech(morecases[morecase])
                         speech('Do you agree?')
-			audio()
-			case = case+1
-			voice = "/var/volatile/audio.wav"
-			bytes = open(voice).read()	
-			s.send(str(len(bytes)))
+            			listen()
+            			case = case+1
+            			voice = "/var/volatile/audio.wav"
+            			bytes = open(voice).read()	
+            			s.send(str(len(bytes)))
 
 
 
@@ -320,7 +337,7 @@ for message in messages:
                 if(command == 'Voice'):	
                     message = data.split('.endmes')[1]
                     speech(message)	
-                    audio()			
+                    listen()			
                     voice = "/var/volatile/audio.wav"
                     bytes = open(voice).read()	
                     s.send(str(len(bytes)))	
