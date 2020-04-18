@@ -38,14 +38,14 @@ def camera():
 	
     photoCaptureProxy.setResolution(2)
     photoCaptureProxy.setPictureFormat("jpg")
-    photoCaptureProxy.takePictures(1, "/var/volatile/", "image")
+    photoCaptureProxy.takePictures(1, "/home/nao/", "image")
 
 #===================================================================
 
 def listen():
 
     channels = [0, 0, 1, 0] # Left, Right, Front, Rear
-    record.startMicrophonesRecording("/var/volatile/audio.wav", 'wav', 16000, channels)
+    record.startMicrophonesRecording("/home/nao/audio.wav", 'wav', 16000, channels)
     time.sleep(4)
     record.stopMicrophonesRecording()
     tts.say("Recording is. over.")
@@ -183,7 +183,7 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -197,7 +197,7 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()                        
                         case = case+1
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -210,7 +210,7 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -223,7 +223,7 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -236,7 +236,7 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -249,7 +249,7 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -267,7 +267,7 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -276,7 +276,7 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -284,7 +284,7 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -292,7 +292,7 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -300,7 +300,7 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -308,7 +308,7 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -316,7 +316,7 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/var/volatile/audio.wav"
+                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -327,7 +327,7 @@ for message in messages:
 
                 if(command == 'Camera'):	
                     camera()
-                    image = "/var/volatile/image.jpg"
+                    image = "/home/nao/image.jpg"
                     bytes = open(image).read()	
                     s.send(str(len(bytes)))
 
@@ -335,7 +335,7 @@ for message in messages:
                     message = data.split('.endmes')[1]
                     speech(message)	
                     listen()			
-                    voice = "/var/volatile/audio.wav"
+                    voice = "/home/nao/audio.wav"
                     bytes = open(voice).read()	
                     s.send(str(len(bytes)))	
 
