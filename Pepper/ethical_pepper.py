@@ -36,30 +36,31 @@ def camera():
 
 #Function for capturing a photo
 	
-	photoCaptureProxy.setResolution(2)
-	photoCaptureProxy.setPictureFormat("jpg")
-	photoCaptureProxy.takePictures(1, "/var/volatile/", "image")
+    photoCaptureProxy.setResolution(2)
+    photoCaptureProxy.setPictureFormat("jpg")
+    photoCaptureProxy.takePictures(1, "/var/volatile/", "image")
 
 #===================================================================
 
 def listen():
 
-	record.startMicrophonesRecording("/var/volatile/audio.wav", 'wav', 16000, (0,0,1,0))
-	time.sleep(4)
-	record.stopMicrophonesRecording()
-	tts.say("Recording is. over.")
-	time.sleep(0.5)
+    channels = [0, 0, 1, 0] # Left, Right, Front, Rear
+    record.startMicrophonesRecording("/var/volatile/audio.wav", 'wav', 16000, channels)
+    time.sleep(4)
+    record.stopMicrophonesRecording()
+    tts.say("Recording is. over.")
+    time.sleep(0.5)
 
 #===================================================================
 
 def speech(message):
 
-	tts.setLanguage("English")
-	tts.setParameter("doubleVoice", 1)
-	tts.setParameter("doubleVoiceLevel", 0)
-	tts.setParameter("doubleVoiceTimeShift", 0.1)
-	tts.setParameter("pitchShift", 1.1)
-	tts.say(message)
+    tts.setLanguage("English")
+    tts.setParameter("doubleVoice", 1)
+    tts.setParameter("doubleVoiceLevel", 0)
+    tts.setParameter("doubleVoiceTimeShift", 0.1)
+    tts.setParameter("pitchShift", 1.1)
+    tts.say(message)
 	#print(message)
 
 #===================================================================
