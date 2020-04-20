@@ -122,7 +122,7 @@ def speech_to_text():
     r = sr.Recognizer()
     audio = sr.AudioFile('audio.wav')
     with audio as source:
-        r.adjust_for_ambient_noise(source,duration=0.1)
+        #r.adjust_for_ambient_noise(source,duration=0.1)
         audio = r.record(source)
     try:
         message = r.recognize_google(audio)
@@ -130,7 +130,8 @@ def speech_to_text():
         print("Could not understand audio")
         message = "silence"
 
-
+    print("Human Replied: ")
+    print(message)
 
     if 'yes' in message:
         message='yes'
