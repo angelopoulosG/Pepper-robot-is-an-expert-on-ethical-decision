@@ -2,14 +2,9 @@
 
 The aim of this project is to construct an intelligent and integrated system on a Pepper robot that can solve ethical dilemmas and to evaluate the reaction of human observers to the competencies displayed by the robot. The types of dilemmas would be those faced by drivers when facing a choice between two evils. Some of these dilemmas will be inspired by the famous series of the Trolley Problem ethical dilemmas. Some of these would be adjusted to traffic situations and autonomous vehicles. 
 
-
-
 [Universitat Pompeu Fabra, Barcelona, Spain.](https://www.upf.edu/)
 
-
 ## System Architecture
-
-
 <img src="/images/system_architecture.png" width="600">
 
 ## Prerequisites 
@@ -38,15 +33,10 @@ pip3 install -U spacy
 pip3 install thinc
 ```
 
-
 #### Pepper Robot
-
 Pepper is a semi-humanoid robot manufactured by SoftBank Robotics (formerly Aldebaran Robotics).
 
-
-
 ## How to run it
-
 * First, download all the code from the folder **Server** to your computer/server.
 * Go to **thebrain.py** and change the **line 16** with your IP.
 * Finally, Enable the "Brain":
@@ -94,8 +84,4 @@ pip install gTTS
 pip install SpeechRecognition
 ```
 
-
-
-
 -->
-
