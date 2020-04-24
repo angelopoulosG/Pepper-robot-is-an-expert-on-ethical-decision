@@ -20,13 +20,24 @@ With the following libraries installed
 
 * SpeechRecognition, Library for performing speech recognition:
 ```
-pip install SpeechRecognition
+pip3 install SpeechRecognition
 ```
 
-* OpenCV, an open source computer vision software library.:
+* OpenCV, an open source computer vision software library:
 ```
-pip install opencv-python
+pip3 install opencv-python
 ```
+
+* SpaCy, a library for advanced Natural Language Processing in Python:
+```
+pip3 install -U spacy
+```
+
+* Thinc, the machine learning library powering spaCy:
+```
+pip3 install thinc
+```
+
 #### Pepper Robot
 
 Pepper is a semi-humanoid robot manufactured by SoftBank Robotics (formerly Aldebaran Robotics).
