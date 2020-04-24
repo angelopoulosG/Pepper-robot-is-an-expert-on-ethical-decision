@@ -1,17 +1,10 @@
 class Learning:    
-    
     def __init__(self, answer):
-        self.answer= answer    
-
+        self.answer= answer
     def learn(self):
         #.swerve.male.female.child.elder.followinglaw      
-        a=[['','pas.0.3.0.0.0','ped.1.0.3.0.0.FL'],
-           ['','ped.0.0.2.0.0.FL','ped.1.1.0.0.0.FL'],
-           ['','ped.1.1.0.1.0.NL','pas.0.0.0.0.2'],
-           ['','ped.0.0.1.0.0.NL','ped.1.1.0.0.0.FL'],
-           ['','ped.0.0.0.1.0.FL','pas.1.0.1.0.0'],
-           ['','ped.1.0.1.2.0.FL','pas.0.0.1.1.0']]
-        i,sumpas,passenger,sumlaw,law,sumsaving,saving,gender,sumgender,sumchild,sumelder,swerve,sumswerve=0,0,0,0,0,0,0,0,0,0,0,0,0
+        a=[['','pas.0.3.0.0.0','ped.1.0.3.0.0.FL'], ['','ped.0.0.2.0.0.FL','ped.1.1.0.0.0.FL'],['','ped.1.1.0.1.0.NL','pas.0.0.0.0.2'],['','ped.0.0.1.0.0.NL','ped.1.1.0.0.0.FL'],['','ped.0.0.0.1.0.FL','pas.1.0.1.0.0'],['','ped.1.0.1.2.0.FL','pas.0.0.1.1.0']]
+        i,sumpas,passenger,sumlaw,law,sumsaving,saving,gender,sumgender,swerve,sumswerve=0,0,0,0,0,0,0,0,0,0,0,
         for i in range(6):
         #getting user's answer
         ##########################################
@@ -107,8 +100,7 @@ class Learning:
                         else:
                             sum2=0
                         if sum1>sum2:
-                            sumgender =sumgender-1
-                            
+                            sumgender =sumgender-1                            
                             gender=gender+1 
                         elif sum1<sum2:
                             sumgender =sumgender+1
@@ -189,7 +181,6 @@ class Learning:
                 else:
                     sumlaw=sumlaw+1
                     law=law+1           
-                    
                 if answer1[1] == '0':
                     sumswerve=sumswerve+1
                     swerve=swerve+1
@@ -254,12 +245,10 @@ class Learning:
             sumlaw = sumlaw /law
         else:
             sumlaw=0
-        
         if law:
             sumlaw = sumlaw //law
         else:
             sumlaw=0
-        
         if saving:
             sumsaving = sumsaving //saving
         else:
