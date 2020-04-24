@@ -11,24 +11,24 @@ The aim of this project is to construct an intelligent and integrated system on 
 
 #### Python 3 (On your computer/server)
 
-With the following libraries installed
+With the following libraries installed:
 
-* SpeechRecognition, a library for performing speech recognition:
+*  SpeechRecognition, a library for performing speech recognition.
 ```
 pip3 install SpeechRecognition
 ```
 
-* OpenCV, an open source computer vision software library:
+*  OpenCV, an open source computer vision software library.
 ```
 pip3 install opencv-python
 ```
 
-* SpaCy, a library for advanced Natural Language Processing in Python:
+*  SpaCy, a library for advanced Natural Language Processing in Python.
 ```
 pip3 install -U spacy
 ```
 
-* Thinc, the machine learning library powering spaCy:
+*  Thinc, the machine learning library powering spaCy.
 ```
 pip3 install thinc
 ```
