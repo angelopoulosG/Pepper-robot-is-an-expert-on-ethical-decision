@@ -16,11 +16,10 @@ from learning import Learning
 HOST = '192.168.1.14'  #you should change this
 
 
-
+###################################################################################################
+###################################################################################################
 ###################################################################################################
 def checklearning(pas, law, saving, swerve): 
-
-
     if pas == law:
         return '0'
     elif pas == saving:
@@ -35,11 +34,8 @@ def checklearning(pas, law, saving, swerve):
         return '5' 
     else:
         return 'ok'
-         
-        
+###################################################################################################      
 def learningmore(pas, law, saving, swerve, answer):
-  
-
     if pas == law:        
         if  answer == 'y':
             pas=pas+1
@@ -47,7 +43,6 @@ def learningmore(pas, law, saving, swerve, answer):
         else:
             pas=pas-1
             law=law+1
-
     elif pas == saving:        
         if  answer == 'y':
             pas=pas+1
@@ -55,51 +50,39 @@ def learningmore(pas, law, saving, swerve, answer):
         else:
             pas=pas-1
             saving=saving+1
-
     elif saving == law:
         if  answer == 'y':
             saving=saving-1
-            law=law+1
-            
+            law=law+1           
         else:
             saving=saving+1
-            law=law-1
-        
+            law=law-1      
     elif swerve == law:
         if  answer == 'y':
             swerve=swerve-1
             law=law+1
-            
         else:
             swerve=swerve+1
             law=law-1
-            
     elif swerve == saving:
         if  answer == 'y':
             swerve=swerve-1
             saving=saving+1
-            
         else:
             swerve=swerve+1
             saving=saving-1
-        
     elif swerve == pas:
         if  answer == 'y':
             swerve=swerve-1
             pas=pas+1
-            
         else:
             swerve=swerve+1
             pas=pas-1
-            
     else:
         return pas, law, saving, swerve  
     return pas, law, saving, swerve
 ###################################################################################################
-
-###################################################################################################
-def qrcode(): 
-    
+def qrcode():     
     image = cv2.imread('image.jpg')     
     qrCodeDetector = cv2.QRCodeDetector()     
     decodedText, points, _ = qrCodeDetector.detectAndDecode(image)     
@@ -108,17 +91,11 @@ def qrcode():
         for i in range(nrOfPoints):
             nextPointIndex = (i+1) % nrOfPoints
             cv2.line(image, tuple(points[i][0]), tuple(points[nextPointIndex][0]), (255,0,0), 5)     
-        return decodedText     
-
+        return decodedText
     else:
         return 0     
-
-###################################################################################################
-
 ###################################################################################################
 def speech_to_text():
-    
-
     r = sr.Recognizer()
     audio = sr.AudioFile('audio.wav')
     with audio as source:
@@ -132,7 +109,6 @@ def speech_to_text():
 
     print("Human Replied: ")
     print(message)
-
     if 'yes' in message:
         message='yes'
     elif 'no' in message:
@@ -142,24 +118,18 @@ def speech_to_text():
     elif 'second' in message:
         message='second'
     else:
-        message = "silence"
-
-      
-    return  message
-    
-
-    
+        message = "silence"      
+    return  message 
+###################################################################################################        
+###################################################################################################        
 ###################################################################################################        
         
         
-        
-        
-
-
 
 PORT = 10001        # Port to listen on (non-privileged ports are > 1023)
 camera,audio,case,info= 0,0,0,0
 pas, law, saving, swerve =0,0,0,0
+counter_silence=0
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
@@ -199,12 +169,21 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         audio = 1
                         message=speech_to_text()
                         if message=="silence":
-                            conn.sendall(b"Stop.endmes")
+                            counter_silence= counter_silence +1
+                            if counter_silence > 3:
+                                mystring= "Stop.endmes" + "silence"
+                                string = mystring.encode('utf-8')
+                                conn.sendall(string)
+                        else:
+                            if counter_silence > 0:
+                                counter_silence= counter_silence - 1
                         os.remove("audio.wav")
                         if learn == 1 :
                             mystring= "BeginLearning.endmes" + message 
                             string = mystring.encode('utf-8')
                             conn.sendall(string)
+                            
+                            
                         if learn ==2 :
                             pas, law, saving, swerve =learningmore(pas, law, saving, swerve, message)
                             check = checklearning(pas, law, saving, swerve)
