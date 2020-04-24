@@ -13,24 +13,27 @@ The aim of this project is to construct an intelligent and integrated system on 
 
 With the following libraries installed:
 
-* SpeechRecognition, a library for performing speech recognition.
+*   SpeechRecognition, a library for performing speech recognition.
 
-```
+```console
 pip3 install SpeechRecognition
 ```
 
 *   OpenCV, an open source computer vision software library.
-```
+
+```console
 pip3 install opencv-python
 ```
 
 *   SpaCy, a library for advanced Natural Language Processing in Python.
-```
+
+```console
 pip3 install -U spacy
 ```
 
 *   Thinc, the machine learning library powering spaCy.
-```
+
+```console
 pip3 install thinc
 ```
 
@@ -42,7 +45,7 @@ Pepper is a semi-humanoid robot manufactured by SoftBank Robotics (formerly Alde
 *   Go to **thebrain.py** and change the **line 16** with your IP.
 *   Finally, Enable the "Brain":
 
-```
+```console
 python3 thebrain.py
 ```
 
@@ -50,7 +53,7 @@ python3 thebrain.py
 *   Go to **ethical_pepper.py** and change the **line 16** with your server's IP.
 *   Finally, Enable Pepper:
 
-```
+```console
 python ethical_pepper.py
 ```
 
@@ -64,9 +67,6 @@ An example of an ethical dilemma which Pepper should answer.
 
 [**Georgios Angelopoulos**](https://www.linkedin.com/in/george-angelopoulos/)
 
-
 ## Supervisor
 
 [**Prof. Vladimir Estivill-Castro**](https://www.upf.edu/web/etic/entry/-/-/54009/409/vladimir-estivill)
-
-
