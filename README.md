@@ -18,7 +18,7 @@ The aim of this project is to construct an intelligent and integrated system on 
 
 With the following libraries installed
 
-* SpeechRecognition, Library for performing speech recognition:
+* SpeechRecognition, a library for performing speech recognition:
 ```
 pip3 install SpeechRecognition
 ```
@@ -37,6 +37,7 @@ pip3 install -U spacy
 ```
 pip3 install thinc
 ```
+
 
 #### Pepper Robot
 
