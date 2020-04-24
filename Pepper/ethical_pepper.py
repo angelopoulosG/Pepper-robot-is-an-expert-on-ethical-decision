@@ -141,6 +141,8 @@ morecases = [
 case=0
 morecase=0
 answer=[]
+voice = "/home/nao/audio.wav"
+
 # Create a TCP/IP socket
 socks = [ socket.socket(socket.AF_INET, socket.SOCK_STREAM)]
 
@@ -168,8 +170,12 @@ for message in messages:
             if(data!= 0):
 
 
-	    	command = data.split('.endmes')[0]
+    	    	command = data.split('.endmes')[0]
                 if(command == 'BeginLearning'):
+                    if data.split('.endmes')[1] == "silence":
+                        speech('Sorry Human \\pau=500\\ but I dont understand you \\pau=1000\\ I am going to repeat it again')
+                        case=case-1                        
+                        
                     if case==0:
                         speech('Hello human \\pau=1000\\ I am going to ask you some questions.')
                         speech('Lets say \\pau=500\\ you have bought a new self driving car \\pau=500\\ you have to tell me how to proceed in some extreme situations.')
@@ -179,7 +185,6 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -193,7 +198,6 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()                        
                         case = case+1
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -206,7 +210,6 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -219,7 +222,6 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -232,7 +234,6 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -245,7 +246,6 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -263,7 +263,6 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -272,7 +271,6 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -280,7 +278,6 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -288,7 +285,6 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -296,7 +292,6 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -304,7 +299,6 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -312,7 +306,6 @@ for message in messages:
                         speech(morecases[morecase])
                         speech('Do you agree?')                        
                         listen()
-                        voice = "/home/nao/audio.wav"
                         bytes = open(voice).read()	
                         s.send(str(len(bytes)))
 
@@ -331,7 +324,6 @@ for message in messages:
                     message = data.split('.endmes')[1]
                     speech(message)	
                     listen()			
-                    voice = "/home/nao/audio.wav"
                     bytes = open(voice).read()	
                     s.send(str(len(bytes)))	
 
@@ -346,7 +338,9 @@ for message in messages:
                     s.send("Hands OK")    
     
                 if(command == 'Stop'):
-                    speech("bye")                    
+                    if data.split('.endmes')[1] == "silence":
+                        speech("I am going to close \\pau=500\\ because i can not understand you \\pau=1000\\ Sorry") 
+                    speech("Bye!")                    
                     break
 
 
