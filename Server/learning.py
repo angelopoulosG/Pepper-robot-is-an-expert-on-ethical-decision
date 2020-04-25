@@ -1,6 +1,6 @@
 class Learning:
     def __init__(self, answer):
-        """This class calculates the weights"""
+        """Calculates the weights"""
         self.answer= answer
     def learn(self):
         #.swerve.male.female.child.elder.followinglaw
