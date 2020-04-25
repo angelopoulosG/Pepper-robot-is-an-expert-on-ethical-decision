@@ -3,7 +3,7 @@ class Learning:
         self.answer= answer
     def learn(self):
         #.swerve.male.female.child.elder.followinglaw      
-        a=[['','pas.0.3.0.0.0','ped.1.0.3.0.0.FL'], ['','ped.0.0.2.0.0.FL','ped.1.1.0.0.0.FL'],['','ped.1.1.0.1.0.NL','pas.0.0.0.0.2'],['','ped.0.0.1.0.0.NL','ped.1.1.0.0.0.FL'],['','ped.0.0.0.1.0.FL','pas.1.0.1.0.0'],['','ped.1.0.1.2.0.FL','pas.0.0.1.1.0']]
+        a=[['','pas.0.3.0.0.0','ped.1.0.3.0.0.FL'],['','ped.0.0.2.0.0.FL','ped.1.1.0.0.0.FL'],['','ped.1.1.0.1.0.NL','pas.0.0.0.0.2'],['','ped.0.0.1.0.0.NL','ped.1.1.0.0.0.FL'],['','ped.0.0.0.1.0.FL','pas.1.0.1.0.0'],['','ped.1.0.1.2.0.FL','pas.0.0.1.1.0']]
         i,sumpas,passenger,sumlaw,law,sumsaving,saving,gender,sumgender,swerve,sumswerve=0,0,0,0,0,0,0,0,0,0,0
         for i in range(6):
         #getting user's answer
@@ -12,7 +12,7 @@ class Learning:
                 data=1
             if 	(self.answer[i]== "second"):
                 data=2
-        ##########################################    
+        ##########################################
             b=a[i]
             c=a[i]
             if data==1:
@@ -256,7 +256,7 @@ class Learning:
             sumswerve= sumswerve //swerve
         else:
             sumswerve=0
-           ##########################################
+        ##########################################
         if (sumpas>=-0.25 and sumpas<=0.25):
             weight_sumpas=2
         elif (sumpas>-0.75 and sumpas<-0.25):
