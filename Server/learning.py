@@ -1,8 +1,9 @@
 class Learning:
     def __init__(self, answer):
+        """This class calculates the weights"""
         self.answer= answer
     def learn(self):
-        #.swerve.male.female.child.elder.followinglaw      
+        #.swerve.male.female.child.elder.followinglaw
         a=[['','pas.0.3.0.0.0','ped.1.0.3.0.0.FL'],['','ped.0.0.2.0.0.FL','ped.1.1.0.0.0.FL'],['','ped.1.1.0.1.0.NL','pas.0.0.0.0.2'],['','ped.0.0.1.0.0.NL','ped.1.1.0.0.0.FL'],['','ped.0.0.0.1.0.FL','pas.1.0.1.0.0'],['','ped.1.0.1.2.0.FL','pas.0.0.1.1.0']]
         i,sumpas,passenger,sumlaw,law,sumsaving,saving,gender,sumgender,swerve,sumswerve=0,0,0,0,0,0,0,0,0,0,0
         for i in range(6):
