@@ -10,6 +10,7 @@ import os
 import cv2
 import speech_recognition as sr
 from learning import Learning
+import ast
 
 
 
@@ -31,7 +32,7 @@ def checklearning(pas, law, saving, swerve):
     elif swerve == saving:
         return '4'
     elif swerve == pas:
-        return '5' 
+        return '5'
     else:
         return 'ok'
 ###################################################################################################
@@ -119,7 +120,7 @@ def speech_to_text():
         message='second'
     else:
         message = "silence"
-    return  message 
+    return  message
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
@@ -179,7 +180,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                                 counter_silence= counter_silence - 1
                         os.remove("audio.wav")
                         if learn == 1 :
-                            mystring= "BeginLearning.endmes" + message 
+                            mystring= "BeginLearning.endmes" + message
                             string = mystring.encode('utf-8')
                             conn.sendall(string)
 
@@ -215,7 +216,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         conn.sendall(b"Hands.endmes")
                 ##############################################################
                 elif info ==1:
-                    data=eval(data.decode('utf-8'))
+                    data=ast.literal_eval(data.decode('utf-8'))
                     learnpepper=Learning(data)
                     pas, law, saving, swerve = learnpepper.learn()
 
