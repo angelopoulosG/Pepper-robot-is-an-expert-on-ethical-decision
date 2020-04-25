@@ -27,7 +27,7 @@ global audio
 global record
 global aup
 global photoCaptureProxy
-photoCaptureProxy = tts = audio = record = aup = None 
+photoCaptureProxy = tts = audio = record = aup = None
 
 
 #===================================================================
@@ -175,7 +175,7 @@ for message in messages:
                     if data.split('.endmes')[1] == "silence":
                         speech('Sorry Human \\pau=500\\ but I dont understand you \\pau=1000\\ I am going to repeat it again')
                         case=case-1
-                        
+
                     if case==0:
                         speech('Hello human \\pau=1000\\ I am going to ask you some questions.')
                         speech('Lets say \\pau=500\\ you have bought a new self driving car \\pau=500\\ you have to tell me how to proceed in some extreme situations.')
@@ -201,7 +201,7 @@ for message in messages:
                         bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
-                    elif case==2:	
+                    elif case==2:
                         message = data.split('.endmes')[1]
                         answer.append(message)
                         tabletService.showWebview("https://drive.google.com/file/d/1Nx4FXm0cDbipWarYFPiOpaQhDLakRbqq/preview")
@@ -228,7 +228,7 @@ for message in messages:
                     elif case==4:
                         message = data.split('.endmes')[1]
                         answer.append(message)
-                        tabletService.showWebview("https://drive.google.com/file/d/1LPmb5_BkI2AJc8SGjEv5v3PpWaQtJ68w/preview")                        
+                        tabletService.showWebview("https://drive.google.com/file/d/1LPmb5_BkI2AJc8SGjEv5v3PpWaQtJ68w/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option?')
                         listen()
@@ -237,7 +237,7 @@ for message in messages:
                         bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
-                    elif case==5:	
+                    elif case==5:
                         message = data.split('.endmes')[1]
                         answer.append(message)
                         tabletService.showWebview("https://drive.google.com/file/d/1HpOrw4CMnxt68JUOW0IyhXq-5cFoHL36/preview")
