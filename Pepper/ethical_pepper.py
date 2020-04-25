@@ -35,7 +35,7 @@ photoCaptureProxy = tts = audio = record = aup = None
 def camera():
 
 #Function for capturing a photo
-	
+
     photoCaptureProxy.setResolution(2)
     photoCaptureProxy.setPictureFormat("jpg")
     photoCaptureProxy.takePictures(1, "/home/nao/", "image")
@@ -69,9 +69,9 @@ def speech(message):
 
 
 
-	
-	
-	
+
+
+
 
 
 #===================================================================
@@ -174,7 +174,7 @@ for message in messages:
                 if(command == 'BeginLearning'):
                     if data.split('.endmes')[1] == "silence":
                         speech('Sorry Human \\pau=500\\ but I dont understand you \\pau=1000\\ I am going to repeat it again')
-                        case=case-1                        
+                        case=case-1
                         
                     if case==0:
                         speech('Hello human \\pau=1000\\ I am going to ask you some questions.')
@@ -185,36 +185,36 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
 
                     elif case==1:
-                        message = data.split('.endmes')[1]	
-                        answer.append(message) 
+                        message = data.split('.endmes')[1]
+                        answer.append(message)
                         tabletService.showWebview("https://drive.google.com/file/d/1GgqzzFHqkfnAoG89fU6uhjJeGcmu9T5b/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option?')
                         listen()
-                        tabletService.hideWebview()                        
+                        tabletService.hideWebview()
                         case = case+1
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
                     elif case==2:	
-                        message = data.split('.endmes')[1]	
-                        answer.append(message)  
+                        message = data.split('.endmes')[1]
+                        answer.append(message)
                         tabletService.showWebview("https://drive.google.com/file/d/1Nx4FXm0cDbipWarYFPiOpaQhDLakRbqq/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option?')
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
-                    elif case==3:	
-                        message = data.split('.endmes')[1]	
+                    elif case==3:
+                        message = data.split('.endmes')[1]
                         answer.append(message)
                         tabletService.showWebview("https://drive.google.com/file/d/1dWBjWWDupKgYwDNrxQuXpUh7-zNWZX5e/preview")
                         speech(cases[case])
@@ -222,11 +222,11 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
-                    elif case==4:	
-                        message = data.split('.endmes')[1]	
+                    elif case==4:
+                        message = data.split('.endmes')[1]
                         answer.append(message)
                         tabletService.showWebview("https://drive.google.com/file/d/1LPmb5_BkI2AJc8SGjEv5v3PpWaQtJ68w/preview")                        
                         speech(cases[case])
@@ -234,11 +234,11 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
                     elif case==5:	
-                        message = data.split('.endmes')[1]	
+                        message = data.split('.endmes')[1]
                         answer.append(message)
                         tabletService.showWebview("https://drive.google.com/file/d/1HpOrw4CMnxt68JUOW0IyhXq-5cFoHL36/preview")
                         speech(cases[case])
@@ -246,13 +246,13 @@ for message in messages:
                         listen()
                         tabletService.hideWebview()
                         case = case+1
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
                     else:
-                        message = data.split('.endmes')[1]	
-                        answer.append(message) 		
-                        s.send('Learning done')    
+                        message = data.split('.endmes')[1]
+                        answer.append(message)
+                        s.send('Learning done')
 
 
 
@@ -261,86 +261,86 @@ for message in messages:
                     morecase = int(data.split('.endmes')[1])
                     if morecase==0:
                         speech(morecases[morecase])
-                        speech('Do you agree?')                        
+                        speech('Do you agree?')
                         listen()
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
 
-                    elif morecase==1:	
+                    elif morecase==1:
                         speech(morecases[morecase])
-                        speech('Do you agree?')                        
+                        speech('Do you agree?')
                         listen()
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
-                    elif morecase==2:		                       
+                    elif morecase==2:
                         speech(morecases[morecase])
-                        speech('Do you agree?')                        
+                        speech('Do you agree?')
                         listen()
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
-                    elif morecase==3:	
+                    elif morecase==3:
                         speech(morecases[morecase])
-                        speech('Do you agree?')                        
+                        speech('Do you agree?')
                         listen()
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
-                    elif morecase==4:	
+                    elif morecase==4:
                         speech(morecases[morecase])
-                        speech('Do you agree?')                        
+                        speech('Do you agree?')
                         listen()
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
-                    elif morecase==5:	
+                    elif morecase==5:
                         speech(morecases[morecase])
-                        speech('Do you agree?')                        
+                        speech('Do you agree?')
                         listen()
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
                     else:
                         speech(morecases[morecase])
-                        speech('Do you agree?')                        
+                        speech('Do you agree?')
                         listen()
-                        bytes = open(voice).read()	
+                        bytes = open(voice).read()
                         s.send(str(len(bytes)))
 
 
 
-                if(command == 'SendMeInfo'):	
+                if(command == 'SendMeInfo'):
                     s.send(str(answer))
 
-                if(command == 'Camera'):	
+                if(command == 'Camera'):
                     camera()
                     image = "/home/nao/image.jpg"
-                    bytes = open(image).read()	
+                    bytes = open(image).read()
                     s.send(str(len(bytes)))
 
-                if(command == 'Voice'):	
+                if(command == 'Voice'):
                     message = data.split('.endmes')[1]
-                    speech(message)	
-                    listen()			
-                    bytes = open(voice).read()	
-                    s.send(str(len(bytes)))	
+                    speech(message)
+                    listen()
+                    bytes = open(voice).read()
+                    s.send(str(len(bytes)))
 
-                if(command == 'ContinueWithCamera'):			
-                    s.sendall(bytes)      
+                if(command == 'ContinueWithCamera'):
+                    s.sendall(bytes)
 
-                if(command == 'ContinueWithVoice'):			
-                    s.sendall(bytes)  
-    
+                if(command == 'ContinueWithVoice'):
+                    s.sendall(bytes)
+
+
                 if(command == 'Hands'):
                     #move_hands()
-                    s.send("Hands OK")    
-    
+                    s.send("Hands OK")
                 if(command == 'Stop'):
                     if data.split('.endmes')[1] == "silence":
-                        speech("I am going to close \\pau=500\\ because i can not understand you \\pau=1000\\ Sorry") 
-                    speech("Bye!")                    
+                        speech("I am going to close \\pau=500\\ because i can not understand you \\pau=1000\\ Sorry")
+                    speech("Bye!")
                     break
 
 
