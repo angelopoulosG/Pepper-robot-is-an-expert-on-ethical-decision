@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-.
 """
 Created on Thu Apr  2 16:01:44 2020
 
@@ -37,7 +37,7 @@ def checklearning(pas, law, saving, swerve):
         return 'ok'
 ###################################################################################################
 def learningmore(pas, law, saving, swerve, answer):
-    if pas == law:        
+    if pas == law:
         if  answer == 'y':
             pas=pas+1
             law=law-1
