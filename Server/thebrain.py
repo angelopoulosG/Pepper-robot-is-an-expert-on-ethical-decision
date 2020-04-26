@@ -7,12 +7,13 @@ Created on Thu Apr  2 16:01:44 2020
 
 import socket
 import os
+from os import path
 import cv2
 import speech_recognition as sr
 from learning import Learning
 import ast
-
-
+import spacy
+import languageprocessing
 
 HOST = '192.168.1.14'  #you should change this
 
@@ -96,7 +97,8 @@ def qrcode():
     else:
         return 0
 ###################################################################################################
-def speech_to_text():
+def speech_to_text(nlp):
+
     r = sr.Recognizer()
     audio = sr.AudioFile('audio.wav')
     with audio as source:
@@ -108,19 +110,13 @@ def speech_to_text():
         print("Could not understand audio")
         message = "silence"
 
-    print("Human Replied: ")
-    print(message)
-    if 'yes' in message:
-        message='yes'
-    elif 'no' in message:
-        message='no'
-    elif 'first' in message:
-        message='first'
-    elif 'second' in message:
-        message='second'
-    else:
-        message = "silence"
-    return  message
+
+    doc = nlp(message)
+
+    frame = languageprocessing.determine_semantic_frame_from_parsed_tree(doc)
+    print("The frame is: " + frame)
+    return frame
+
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
@@ -131,6 +127,17 @@ PORT = 10001        # Port to listen on (non-privileged ports are > 1023)
 camera,audio,case,info= 0,0,0,0
 pas, law, saving, swerve =0,0,0,0
 counter_silence=0
+message=''
+if (path.exists('audio.wav')):
+    os.remove("audio.wav")
+
+
+
+nlp = spacy.load("en_core_web_sm")
+
+
+
+
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
@@ -145,6 +152,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 conn.sendall(b"BeginLearning.endmes")
                 audio=1
                 learn=1
+
 
 
             elif data == b'Learning done':
@@ -167,9 +175,21 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     t.close()
                     bytes = os.stat('audio.wav').st_size
                     if bytes == length:
+
                         audio = 1
-                        message=speech_to_text()
-                        if message=="silence":
+                        frame=speech_to_text(nlp)
+                        if frame == "request_first":
+                            message="first"
+                        if frame =="request_second":
+                            message= "second"
+                        if frame == "accept_suggested":
+                            message="y"
+                        if frame =="deny_suggested":
+                            message= "no"
+                        if frame=="request_goodbye":
+                            conn.sendall(b"Stop.endmes")
+                        if frame=="False" or frame=="greeting":
+                            message== "silence"
                             counter_silence= counter_silence +1
                             if counter_silence > 3:
                                 mystring= "Stop.endmes" + "silence"
@@ -180,6 +200,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                                 counter_silence= counter_silence - 1
                         os.remove("audio.wav")
                         if learn == 1 :
+                            if frame != "request_first" and frame !="request_second":
+                                message="silence"
+                                counter_silence= counter_silence +1
+
                             mystring= "BeginLearning.endmes" + message
                             string = mystring.encode('utf-8')
                             conn.sendall(string)
@@ -234,4 +258,4 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         conn.sendall(b"Stop.endmes")
 
                 else:
-                    print("hi")
+                    conn.sendall(b"Stop.endmes")
