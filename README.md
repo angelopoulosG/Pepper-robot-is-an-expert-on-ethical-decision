@@ -33,6 +33,12 @@ pip3 install opencv-python
 pip3 install -U spacy
 ```
 
+*   en_core_web_sm, English multi-task CNN trained on OntoNotes. 
+
+```console
+python3 -m spacy download en_core_web_sm
+```
+
 *   Thinc, the machine learning library powering spaCy.
 
 ```console
