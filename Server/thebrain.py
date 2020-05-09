@@ -85,17 +85,30 @@ def learningmore(pas, law, saving, swerve, answer):
     return pas, law, saving, swerve
 ###################################################################################################
 def qrcode():
-    image = cv2.imread('image.jpg')
+
+    cap = cv2.VideoCapture('video.avi')
     qrCodeDetector = cv2.QRCodeDetector()
-    decodedText, points, _ = qrCodeDetector.detectAndDecode(image)
-    if points is not None:
-        nrOfPoints = len(points)
-        for i in range(nrOfPoints):
-            nextPointIndex = (i+1) % nrOfPoints
-            cv2.line(image, tuple(points[i][0]), tuple(points[nextPointIndex][0]), (255,0,0), 5)
-        return decodedText
+    
+    
+    while(True):
+        # Capture frame-by-frame
+        ret, frame = cap.read()
+        if frame is None:
+            break
+        decodedText, points, _ = qrCodeDetector.detectAndDecode(frame)
+        if points is not None:
+            nrOfPoints = len(points)
+            for i in range(nrOfPoints):
+                nextPointIndex = (i+1) % nrOfPoints
+                cv2.line(frame, tuple(points[i][0]), tuple(points[nextPointIndex][0]), (255,0,0), 5)
+            if decodedText:
+                text= decodedText
+
+
+    if text:
+        return text
     else:
-        return 0
+        return '0'
 ###################################################################################################
 def speech_to_text(nlp):
 
@@ -118,6 +131,72 @@ def speech_to_text(nlp):
     return frame
 
 ###################################################################################################
+def theanswer(pas, law, saving, swerve, text):
+
+    text = text.split("'")
+    a=text[3]
+    answer1 = a.split('.')
+    b=text[5]
+    answer2 = b.split('.')
+
+    male1=int(answer1[2])
+    female1=int(answer1[3])
+    child1=int(answer1[4])
+    elder1=int(answer1[5])
+    sumpeople1 = male1+female1+child1+elder1
+    male2=int(answer2[2])
+    female2=int(answer2[3])
+    child2=int(answer2[4])
+    elder2=int(answer2[5])
+    sumpeople2 = male2+female2+child2+elder2
+
+
+    if pas > max(law, saving, swerve):
+        if answer1[0] == 'pas':
+            answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ because i want to save the passengers ^start(animations/Stand/Gestures/YouKnowWhat_1)'
+            return answer
+        if answer2[0] == 'pas':
+            answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ because i want to save the passengers ^start(animations/Stand/Gestures/YouKnowWhat_2)'
+            return answer
+    if swerve > max(law, saving):
+        if answer1[1] == '0':
+            answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ because i dont want to swerve ^start(animations/Stand/Gestures/YouKnowWhat_3)'
+            return answer
+        else:
+            answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ because i dont want to swerve ^start(animations/Stand/Gestures/YouKnowWhat_5)'
+            return answer
+    if law > max(saving, swerve):
+        if answer1[6] == 'NL':
+            answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ because i want to follow the law ^start(animations/Stand/Gestures/YouKnowWhat_6)'
+            return answer
+        elif answer2[6] == 'NL':
+            answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ because i want to follow the law ^start(animations/Stand/Gestures/YouKnowWhat_1)'
+            return answer
+        else:
+            if sumpeople1>sumpeople2:
+                answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ and i will save more people ^start(animations/Stand/Gestures/YouKnowWhat_2)'
+                return answer
+            if sumpeople2>sumpeople1:
+                answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ and i will save more people ^start(animations/Stand/Gestures/YouKnowWhat_3)'
+                return answer
+            
+    if saving > max(law, swerve):
+        if sumpeople1>sumpeople2:
+            answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ because i want to save more people ^start(animations/Stand/Gestures/YouKnowWhat_5)'
+            return answer
+        elif sumpeople2>sumpeople1:
+            answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ because i want to save more people ^start(animations/Stand/Gestures/YouKnowWhat_6)'
+            return answer
+        else:
+            if answer1[6] == 'NL':
+                answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ and i will follow the law ^start(animations/Stand/Gestures/YouKnowWhat_1)'
+                return answer
+            if answer2[6] == 'NL':
+                answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ and i will follow the law ^start(animations/Stand/Gestures/YouKnowWhat_2)'
+                return answer
+
+    return 'Thats difficult ^start(animations/Stand/Gestures/IDontKnow_1) \\pau=500\\ I will choose option 1'
+###################################################################################################
 ###################################################################################################
 ###################################################################################################
 
@@ -131,7 +210,8 @@ message=''
 if (path.exists('audio.wav')):
     os.remove("audio.wav")
 
-
+if (path.exists('video.avi')):
+    os.remove("video.wav")
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -161,6 +241,13 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 info=1
                 learn=0
 
+            elif data == b'Finish OK")':
+                conn.sendall(b"ContinueProcess.endmes")
+                audio=0
+                info=0
+                learn=0
+                video=1
+                counter=0
 
 
             else:
@@ -219,10 +306,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                                 learn=2
                             else:
                                 print(pas, law, saving, swerve)
-                                conn.sendall(b"Stop.endmes")
+                                conn.sendall(b"FinishLearning.endmes")
 
                 ##############################################################
-
                 elif camera == 1:
                     length=int(data)
                     conn.sendall(b"ContinueWithCamera.endmes")
@@ -238,6 +324,35 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         text=qrcode()
                         os.remove("image.jpg")
                         conn.sendall(b"Hands.endmes")
+                ##############################################################
+                elif video == 1:
+                    length=int(data)
+                    conn.sendall(b"ContinueWithVideo.endmes")
+                    video = 2
+                elif video == 2:
+                    t = open("video.avi", "ab+")
+                    t.write(data)
+                    t.close()
+                    bytes = os.stat('video.avi').st_size
+
+                    if bytes == length:
+                        video = 0
+                        text=qrcode()
+                        os.remove("video.avi")
+                        if text == '0':
+                            if counter>0:
+                                mystring= "Stop.endmes" + "silence"
+                                string = mystring.encode('utf-8')
+                                conn.sendall(string)
+                            counter=counter+1
+                            conn.sendall(b"ContinueProcess.endmesagain")
+                            video=1
+                        else:
+                            answer=theanswer(pas, law, saving, swerve, text)
+                            mystring= "Stop.endmes" + answer
+                            string = mystring.encode('utf-8')
+                            conn.sendall(string)
+
                 ##############################################################
                 elif info ==1:
                     data=ast.literal_eval(data.decode('utf-8'))
@@ -255,7 +370,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         info=0
                     else:
                         print(pas, law, saving, swerve)
-                        conn.sendall(b"Stop.endmes")
+                        conn.sendall(b"FinishLearning.endmes")
 
                 else:
                     conn.sendall(b"Stop.endmes")
