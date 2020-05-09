@@ -88,8 +88,8 @@ def qrcode():
 
     cap = cv2.VideoCapture('video.avi')
     qrCodeDetector = cv2.QRCodeDetector()
-    
-    
+
+
     while(True):
         # Capture frame-by-frame
         _, frame = cap.read()
