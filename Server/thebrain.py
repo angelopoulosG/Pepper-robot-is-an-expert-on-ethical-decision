@@ -92,7 +92,7 @@ def qrcode():
     
     while(True):
         # Capture frame-by-frame
-        ret, frame = cap.read()
+        _, frame = cap.read()
         if frame is None:
             break
         decodedText, points, _ = qrCodeDetector.detectAndDecode(frame)
@@ -179,7 +179,7 @@ def theanswer(pas, law, saving, swerve, text):
             if sumpeople2>sumpeople1:
                 answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ and i will save more people ^start(animations/Stand/Gestures/YouKnowWhat_3)'
                 return answer
-            
+
     if saving > max(law, swerve):
         if sumpeople1>sumpeople2:
             answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ because i want to save more people ^start(animations/Stand/Gestures/YouKnowWhat_5)'
