@@ -45,7 +45,7 @@ class Learning:
             if answer1[0] == 'ped' and answer2[0] == 'pas':
                 sumpas=sumpas+1
                 passenger=passenger+1
-                if answer1[5] == 'FL':
+                if answer1[6] == 'FL':
                     sumlaw=sumlaw-1
                     law=law+1
                 else:
@@ -111,7 +111,7 @@ class Learning:
             elif answer1[0] == 'pas' and answer2[0] == 'ped':
                 sumpas=sumpas-1
                 passenger=passenger+1
-                if answer2[5] == 'FL':
+                if answer2[6] == 'FL':
                     sumlaw=sumlaw+1
                     law=law+1
                 else:
@@ -175,7 +175,7 @@ class Learning:
                             sumgender =sumgender
                             gender=gender+1
             else:
-                if answer1[5] == 'FL':
+                if answer1[6] == 'FL':
                     sumlaw=sumlaw-1
                     law=law+1
                 else:
