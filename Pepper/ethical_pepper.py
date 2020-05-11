@@ -91,6 +91,7 @@ session.connect("tcp://127.0.0.1:9559")
 tabletService = session.service("ALTabletService")
 tabletService.enableWifi()
 ttsa = session.service("ALAnimatedSpeech")
+moodService = session.service("ALMood")
 
 
 
@@ -199,12 +200,12 @@ for message in messages:
                     if case==0:
                         speech('Hello human ^start(animations/Stand/Gestures/Hey_1) I am going to ask you some questions.')
                         speech('Lets say \\pau=500\\ you have bought a new self driving car \\pau=500\\ you have to tell me how to proceed in some extreme situations.')
-                        tabletService.showWebview("https://drive.google.com/file/d/1YHss1CLO0T2xgl_BSL_s8-_x7Ia8SSQg/preview")
+                        tabletService.showImage("https://i.ibb.co/fdfXXPz/case1.png")
                         time.sleep(3)
                         speech(cases[case])
                         speech('What do you choose? First or second option? ^start(animations/Stand/Gestures/Thinking_1)')
                         listen()
-                        tabletService.hideWebview()
+                        tabletService.hideImage()
                         case = case+1
                         bytes = open(voice).read()
                         s.send(str(len(bytes)))
@@ -382,7 +383,12 @@ for message in messages:
                         speech("I am going to close \\pau=500\\ because i can not understand you \\pau=1000\\ Sorry ^start(animations/Stand/Gestures/Desperate_1)")
                     else:
                         text=data.split('.endmes')[1]
+                        moodService.subscribe("Tutorial_RecordMood", "Active")
+                        # The preloading of all ALMood extractors may take up to 2 secondes:
+                        time.sleep(2)
                         speech(text)
+                        print moodService.getEmotionalReaction()
+                        moodService.unsubscribe("Tutorial_RecordMood")
                     speech("Bye!")
                     break
 
