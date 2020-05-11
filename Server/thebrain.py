@@ -207,6 +207,7 @@ camera,audio,case,info= 0,0,0,0
 pas, law, saving, swerve =0,0,0,0
 counter_silence=0
 message=''
+
 if (path.exists('audio.wav')):
     os.remove("audio.wav")
 
@@ -232,7 +233,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 conn.sendall(b"BeginLearning.endmes")
                 audio=1
                 learn=1
-
+                video=0
 
 
             elif data == b'Learning done':
