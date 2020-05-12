@@ -291,7 +291,7 @@ for message in messages:
 
                     elif morecase==1:
                         speech(morecases[morecase])
-                        speech('Do you agree? ^start(animations/Stand/Waiting/Think_1)')
+                        speech('Do you agree? ^start(animations/Stand/Waiting/Think_3)')
                         listen()
                         bytes = open(voice).read()
                         s.send(str(len(bytes)))
