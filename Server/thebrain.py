@@ -242,7 +242,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 info=1
                 learn=0
 
-            elif data == b'Finish OK")':
+            elif data == b'Finish OK':
                 conn.sendall(b"ContinueProcess.endmes")
                 audio=0
                 info=0
