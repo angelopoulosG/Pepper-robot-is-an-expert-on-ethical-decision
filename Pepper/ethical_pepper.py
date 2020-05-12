@@ -367,8 +367,8 @@ for message in messages:
 
 
                 if(command == 'ContinueProcess'):
-                    if data.split('.endmes')[1] == "silence":
-                        speech("Sorry friend \\pau=500\\ lets go one more time \\pau=500\\ because i can not understand you \\pau=1000\\ Sorry")
+                    if data.split('.endmes')[1] == "again":
+                        speech("Sorry friend \\pau=500\\ lets go one more time \\pau=500\\ because i can not understand you \\pau=500\\ Sorry ^start(animations/Stand/Gestures/Desperate_1)")
                     speech("Please \\pau=500\\ put the image \\pau=500\\ in front of my eyes!")
                     video()
                     video = "/home/nao/video.avi"
