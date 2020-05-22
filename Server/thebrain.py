@@ -14,7 +14,7 @@ from learning import Learning
 import ast
 import spacy
 import languageprocessing
-import random 
+import random
 
 HOST = '192.168.1.14'  #you should change this
 
