@@ -88,7 +88,7 @@ def qrcode():
 
     cap = cv2.VideoCapture('video.avi')
     qrCodeDetector = cv2.QRCodeDetector()
-
+    dtext=""
 
     while(True):
         # Capture frame-by-frame
@@ -102,11 +102,11 @@ def qrcode():
                 nextPointIndex = (i+1) % nrOfPoints
                 cv2.line(frame, tuple(points[i][0]), tuple(points[nextPointIndex][0]), (255,0,0), 5)
             if decodedText:
-                text= decodedText
+                dtext= decodedText
 
 
-    if text:
-        return text
+    if dtext != "":
+        return dtext
     else:
         return '0'
 ###################################################################################################
