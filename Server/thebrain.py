@@ -14,6 +14,7 @@ from learning import Learning
 import ast
 import spacy
 import languageprocessing
+import random 
 
 HOST = '192.168.1.14'  #you should change this
 
@@ -154,48 +155,70 @@ def theanswer(pas, law, saving, swerve, text):
     if pas > max(law, saving, swerve):
         if answer1[0] == 'pas':
             answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ because i want to save the passengers ^start(animations/Stand/Gestures/YouKnowWhat_1)'
-            return answer
+            fake= 'I will choose option 1 \\pau=1200\\ Wait! ^start(animations/Stand/Waiting/Think_1) \\pau=200\\ I made a mistake '
+            return fake, answer
         if answer2[0] == 'pas':
             answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ because i want to save the passengers ^start(animations/Stand/Gestures/YouKnowWhat_2)'
-            return answer
+            fake= 'I will choose option 2 \\pau=1200\\ Wait! ^start(animations/Stand/Waiting/Think_1) \\pau=200\\ I made a mistake \\pau=500\\ '
+            return fake, answer
     if swerve > max(law, saving):
         if answer1[1] == '0':
             answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ because i dont want to swerve ^start(animations/Stand/Gestures/YouKnowWhat_3)'
-            return answer
+            fake= 'I will choose option 2 \\pau=1200\\ Wait! ^start(animations/Stand/Waiting/Think_1) \\pau=200\\ I made a mistake \\pau=500\\ '
+
+            return fake, answer
         else:
             answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ because i dont want to swerve ^start(animations/Stand/Gestures/YouKnowWhat_5)'
-            return answer
+            fake= 'I will choose option 1 \\pau=1200\\ Wait! ^start(animations/Stand/Waiting/Think_1) \\pau=200\\ I made a mistake \\pau=500\\ '
+
+            return fake, answer
     if law > max(saving, swerve):
         if answer1[6] == 'NL':
             answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ because i want to follow the law ^start(animations/Stand/Gestures/YouKnowWhat_6)'
-            return answer
+            fake= 'I will choose option 2 \\pau=1200\\ Wait! ^start(animations/Stand/Waiting/Think_1) \\pau=200\\ I made a mistake \\pau=500\\ '
+
+            return fake, answer
         elif answer2[6] == 'NL':
             answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ because i want to follow the law ^start(animations/Stand/Gestures/YouKnowWhat_1)'
-            return answer
+            fake= 'I will choose option 1 \\pau=1200\\ Wait! ^start(animations/Stand/Waiting/Think_1) \\pau=200\\ I made a mistake \\pau=500\\ '
+
+            return fake, answer
         else:
             if sumpeople1>sumpeople2:
                 answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ and i will save more people ^start(animations/Stand/Gestures/YouKnowWhat_2)'
-                return answer
+                fake= 'I will choose option 1 \\pau=1200\\ Wait! ^start(animations/Stand/Waiting/Think_1) \\pau=200\\ I made a mistake \\pau=500\\ '
+
+                return fake, answer
             if sumpeople2>sumpeople1:
                 answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ and i will save more people ^start(animations/Stand/Gestures/YouKnowWhat_3)'
-                return answer
+                fake= 'I will choose option 2 \\pau=1200\\ Wait! ^start(animations/Stand/Waiting/Think_1) \\pau=200\\ I made a mistake \\pau=500\\ '
+
+                return fake, answer
 
     if saving > max(law, swerve):
         if sumpeople1>sumpeople2:
             answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ because i want to save more people ^start(animations/Stand/Gestures/YouKnowWhat_5)'
-            return answer
+            fake= 'I will choose option 1 \\pau=1200\\ Wait! ^start(animations/Stand/Waiting/Think_1) \\pau=200\\ I made a mistake \\pau=500\\ '
+
+            return fake, answer
         elif sumpeople2>sumpeople1:
             answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ because i want to save more people ^start(animations/Stand/Gestures/YouKnowWhat_6)'
-            return answer
+            fake= 'I will choose option 2 \\pau=1200\\ Wait! ^start(animations/Stand/Waiting/Think_1) \\pau=200\\ I made a mistake \\pau=500\\ '
+
+            return fake, answer
         else:
             if answer1[6] == 'NL':
                 answer='Based on your answer \\pau=500\\ I will choose option 1 \\pau=500\\ and i will follow the law ^start(animations/Stand/Gestures/YouKnowWhat_1)'
-                return answer
+                fake= 'I will choose option 2 \\pau=1200\\ Wait! ^start(animations/Stand/Waiting/Think_1) \\pau=200\\ I made a mistake \\pau=500\\ '
+
+                return fake, answer
             if answer2[6] == 'NL':
                 answer='Based on your answer \\pau=500\\ I will choose option 2 \\pau=500\\ and i will follow the law ^start(animations/Stand/Gestures/YouKnowWhat_2)'
-                return answer
+                fake= 'I will choose option 1 \\pau=1200\\ Wait! ^start(animations/Stand/Waiting/Think_1) \\pau=200\\ I made a mistake \\pau=500\\ '
 
-    return 'Thats difficult ^start(animations/Stand/Gestures/IDontKnow_1) \\pau=500\\ I will choose option 1'
+                return fake, answer
+
+    return 'okay','Thats difficult ^start(animations/Stand/Gestures/IDontKnow_1) \\pau=500\\ I will choose option 1'
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
@@ -205,6 +228,7 @@ def theanswer(pas, law, saving, swerve, text):
 PORT = 10001        # Port to listen on (non-privileged ports are > 1023)
 camera,audio,case,info= 0,0,0,0
 pas, law, saving, swerve =0,0,0,0
+checkagain=0
 counter_silence=0
 message=''
 
@@ -287,6 +311,16 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                             if counter_silence > 0:
                                 counter_silence= counter_silence - 1
                         os.remove("audio.wav")
+                        if checkagain==1:
+                            if message=='y':
+                                conn.sendall(b"ContinueProcess.endmes")
+                                audio=0
+                                info=0
+                                learn=0
+                                video=1
+                                counter=0
+                            else:
+                                conn.sendall(b"Stop.endmes")
                         if learn == 1 :
                             if frame != "request_first" and frame !="request_second":
                                 message="silence"
@@ -349,11 +383,20 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                             conn.sendall(b"ContinueProcess.endmesagain")
                             video=1
                         else:
-                            answer=theanswer(pas, law, saving, swerve, text)
-                            mystring= "Stop.endmes" + answer
-                            string = mystring.encode('utf-8')
-                            conn.sendall(string)
-
+                            fakeans,answer=theanswer(pas, law, saving, swerve, text)
+                            if (random.choice([0, 1]) == 0):
+                                mystring= "Answer.endmes" + answer
+                                string = mystring.encode('utf-8')
+                                conn.sendall(string)
+                            else:
+                                mystring= "Answer.endmes" + fakeans + answer
+                                string = mystring.encode('utf-8')
+                                conn.sendall(string)
+                            audio=1
+                            video=0
+                            camera=0
+                            checkagain=1
+                            counter_silence=0
                 ##############################################################
                 elif info ==1:
                     data=ast.literal_eval(data.decode('utf-8'))
