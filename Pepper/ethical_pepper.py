@@ -365,6 +365,18 @@ for message in messages:
                     speech("Perfect \\pau=500\\ Now i know \\pau=500\\ how you are thinking! ^start(animations/Stand/Gestures/Enthusiastic_4)")
                     s.send("Finish OK")
 
+                if(command == 'Answer'):
+                    text=data.split('.endmes')[1]
+                    moodService.subscribe("Tutorial_RecordMood", "Active")
+                    # The preloading of all ALMood extractors may take up to 2 seconds:
+                    time.sleep(2)
+                    speech(text)
+                    print moodService.getEmotionalReaction()
+                    moodService.unsubscribe("Tutorial_RecordMood")
+                    speech('Are you going to show me another case ? ^start(animations/Stand/Waiting/Think_1)')
+                    listen()
+                    bytes = open(voice).read()
+                    s.send(str(len(bytes)))
 
                 if(command == 'ContinueProcess'):
                     if data.split('.endmes')[1] == "again":
@@ -380,16 +392,9 @@ for message in messages:
 
                 if(command == 'Stop'):
                     if data.split('.endmes')[1] == "silence":
-                        speech("I am going to close \\pau=500\\ because i can not understand you \\pau=1000\\ Sorry ^start(animations/Stand/Gestures/Desperate_1)")
-                    else:
-                        text=data.split('.endmes')[1]
-                        moodService.subscribe("Tutorial_RecordMood", "Active")
-                        # The preloading of all ALMood extractors may take up to 2 secondes:
-                        time.sleep(2)
-                        speech(text)
-                        print moodService.getEmotionalReaction()
-                        moodService.unsubscribe("Tutorial_RecordMood")
-                    speech("Bye!")
+                        speech("I can not understand you \\pau=1000\\ Sorry ^start(animations/Stand/Gestures/Desperate_1) \\pau=500\\ because of that")
+
+                    speech("I am going to close. Nice to meet you \\pau=500\\ Bye! ^start(animations/Stand/Gestures/Hey_3) ")
                     break
 
 
