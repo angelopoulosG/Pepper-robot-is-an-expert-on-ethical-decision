@@ -16,7 +16,7 @@ import spacy
 import languageprocessing
 import random
 
-HOST = '192.168.1.14'  #you should change this
+HOST = '192.168.1.178'  #you should change this
 
 
 ###################################################################################################
@@ -107,8 +107,10 @@ def qrcode():
 
 
     if dtext != "":
+        print(dtext)
         return dtext
     else:
+        print("No qrcode")
         return '0'
 ###################################################################################################
 def speech_to_text(nlp):
@@ -236,7 +238,7 @@ if (path.exists('audio.wav')):
     os.remove("audio.wav")
 
 if (path.exists('video.avi')):
-    os.remove("video.wav")
+    os.remove("video.avi")
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -259,6 +261,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 learn=1
                 video=0
 
+            if data == b'Readywithoutlearning':
+                conn.sendall(b"ContinueProcess.endmes")
+                audio=0
+                info=0
+                learn=0
+                video=1
+                counter=0
+                pas, law, saving, swerve= 3,2,0,1
 
             elif data == b'Learning done':
                 conn.sendall(b"SendMeInfo.endmes")
