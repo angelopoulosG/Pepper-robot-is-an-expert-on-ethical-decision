@@ -87,7 +87,7 @@ def test1():
 
     #===================================================================
     try:
-            tablet  = ALProxy("ALTabletService", "127.0.0.1", 9559)
+            tabletservice  = ALProxy("ALTabletService", "127.0.0.1", 9559)
     except Exception, cd:
             print "Could not create proxy to ALTabletService"
             print "Error was: ", cd
@@ -111,7 +111,7 @@ def menu():
         C: Testing the tablet
         Q: Exit
         """)
-        choice=raw_input("Please enter your choice: ") 
+        choice=raw_input("Please enter your choice: ")
         if choice == "A" or choice =="a":
             return 'a'
         elif choice == "B" or choice =="b":
