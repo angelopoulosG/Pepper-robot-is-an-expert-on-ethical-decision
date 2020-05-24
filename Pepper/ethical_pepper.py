@@ -32,6 +32,111 @@ global videoRecorderProxy
 videoRecorderProxy = photoCaptureProxy = tts = audio = record = aup = None
 
 
+def test2():
+    """
+    This example uses the showWebview method.
+    To Test ALTabletService, you need to run the script ON the robot.
+    """
+    # Get the service ALTabletService.
+    
+    session = qi.Session()
+    try:
+        session.connect("tcp://127.0.0.1"+ ":9559")
+    except RuntimeError:
+        print ("Cannot connect to tablet 1")
+
+    try:
+        tabletService = session.service("ALTabletService")
+
+        # Ensure that the tablet wifi is enable
+        tabletService.enableWifi()
+
+        # Display a web page on the tablet
+        tabletService.showWebview("http://www.google.com")
+
+        time.sleep(3)
+
+        # Display a local web page located in boot-config/html folder
+        # The ip of the robot from the tablet is 198.18.0.1
+        tabletService.showWebview("https://i.ibb.co/fdfXXPz/case1.png")
+
+        time.sleep(3)
+
+        # Hide the web view
+        tabletService.hideWebview()
+    except Exception, e:
+        print "Error was: ", e
+        
+    try:
+        tabletService = session.service("ALTabletService")
+
+        # Ensure that the tablet wifi is enable
+        tabletService.enableWifi()
+
+        # Display a web page on the tablet
+        tabletService.showImage("https://i.ibb.co/fdfXXPz/case1.png")
+
+        time.sleep(3)
+
+        # Hide the web view
+        tabletService.hideImage()
+    except Exception, ef:
+        print "Error was: ", ef
+
+def test1():
+
+    #===================================================================
+    try:
+            tablet  = ALProxy("ALTabletService", "127.0.0.1", 9559)
+    except Exception, cd:
+            print "Could not create proxy to ALTabletService"
+            print "Error was: ", cd
+    #===================================================================
+    tabletservice.showWebview("https://drive.google.com/file/d/1GgqzzFHqkfnAoG89fU6uhjJeGcmu9T5b/preview")
+    time.sleep(7)
+    
+    # Hide the web view
+    tabletService.hideWebview()
+
+
+#===================================================================
+
+def menu():
+    choice=True
+    while choice:
+        print()
+        print ("""
+        A: Start a new conversation with Pepper 
+        B: Pepper has already learned
+        C: Testing the tablet
+        Q: Exit
+        """)
+        choice=raw_input("Please enter your choice: ") 
+        if choice == "A" or choice =="a":
+            return 'a'
+        elif choice == "B" or choice =="b":
+            return 'b'
+        elif choice == "C" or choice =="c":
+            test1()
+            choice1=raw_input("Did you see the image on the tablet? (Y or N)")
+            if choice1 == "Y" or choice1 =="y":
+                print("please inform george that code No1 worked")
+                sys.exit(0)
+            else:
+                test2()
+                choice1=raw_input("Did you see the image on the tablet? (Y or N)")
+                if choice1 == "Y" or choice1 =="y":
+                    print("please inform george that code No2 worked")
+                    sys.exit(0)
+                else:
+                    print("please inform george that none of them worked")
+                    sys.exit(0)
+        elif choice=="Q" or choice=="q":
+            sys.exit(0)
+        else:
+            print("You must only select either A , B, C or Q")
+            print("Please try again")
+
 #===================================================================
 
 def camera():
@@ -67,7 +172,7 @@ def speech(message):
 
 #===================================================================
 
-def video():
+def videof():
 
     videoRecorderProxy.setFrameRate(10.0)
     videoRecorderProxy.setResolution(2) # Set resolution to VGA (640 x 480)
@@ -134,7 +239,7 @@ except Exception, f:
 #===================================================================
 
 
-
+thevalue=menu()
 
 #===================================================================
 #Create the sentences
@@ -179,19 +284,21 @@ for s in socks:
 
 for message in messages:
 
-    # Send messages on both sockets
+    # Send message
     for s in socks:
-        s.send("Ready")
+        if thevalue=='a':
+            s.send("Ready")
+        if thevalue=='b':
+            s.send("Readywithoutlearning")
 
 
-    # Read responses on both sockets
+
+    # Read response
     for s in socks:
         while True:
             data = s.recv(4096)
             if(data!= 0):
-
-
-    	    	command = data.split('.endmes')[0]
+                command = data.split('.endmes')[0]
                 if(command == 'BeginLearning'):
                     if data.split('.endmes')[1] == "silence":
                         speech('Sorry Human \\pau=500\\ but I dont understand you ^start(animations/Stand/Gestures/IDontKnow_1) \\pau=500\\ I am going to repeat it again')
@@ -382,7 +489,7 @@ for message in messages:
                     if data.split('.endmes')[1] == "again":
                         speech("Sorry friend \\pau=500\\ lets go one more time \\pau=500\\ because i can not understand you \\pau=500\\ Sorry ^start(animations/Stand/Gestures/Desperate_1)")
                     speech("Please \\pau=500\\ put the image \\pau=500\\ in front of my eyes!")
-                    video()
+                    videof()
                     video = "/home/nao/video.avi"
                     bytes = open(video).read()
                     s.send(str(len(bytes)))
