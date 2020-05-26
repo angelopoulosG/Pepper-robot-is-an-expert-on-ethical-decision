@@ -41,7 +41,7 @@ def test2():
     
     session = qi.Session()
     try:
-        session.connect("tcp://127.0.0.1"+ ":9559")
+        session.connect("tcp://198.18.0.1:9559")
     except RuntimeError:
         print ("Cannot connect to tablet 1")
 
@@ -87,7 +87,7 @@ def test1():
 
     #===================================================================
     try:
-            tabletservice  = ALProxy("ALTabletService", "127.0.0.1", 9559)
+            tabletservice  = ALProxy("ALTabletService", "198.18.0.1", 9559)
     except Exception, cd:
             print "Could not create proxy to ALTabletService"
             print "Error was: ", cd
