@@ -256,12 +256,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if not data:
                 break
             if data == b'Ready':
+                print(data)
                 conn.sendall(b"BeginLearning.endmes")
                 audio=1
                 learn=1
                 video=0
 
             if data == b'Readywithoutlearning':
+                print(data)
                 conn.sendall(b"ContinueProcess.endmes")
                 audio=0
                 info=0
@@ -271,12 +273,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 pas, law, saving, swerve= 3,2,0,1
 
             elif data == b'Learning done':
+                print(data)
                 conn.sendall(b"SendMeInfo.endmes")
                 audio=0
                 info=1
                 learn=0
 
             elif data == b'Finish OK':
+                print(data)
                 conn.sendall(b"ContinueProcess.endmes")
                 audio=0
                 info=0
