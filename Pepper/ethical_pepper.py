@@ -104,7 +104,7 @@ def test1():
 def menu():
     choice=True
     while choice:
-        print()
+        print("")
         print ("""
         A: Start a new conversation with Pepper 
         B: Pepper has already learned
@@ -290,7 +290,8 @@ for message in messages:
             s.send("Ready")
         if thevalue=='b':
             s.send("Readywithoutlearning")
-
+        if thevalue=='c':
+            break
 
 
     # Read response
@@ -298,6 +299,9 @@ for message in messages:
         while True:
             data = s.recv(4096)
             if(data!= 0):
+                print(" ")
+                print("----------" + data + "----------")
+                print(" ")
                 command = data.split('.endmes')[0]
                 if(command == 'BeginLearning'):
                     if data.split('.endmes')[1] == "silence":
