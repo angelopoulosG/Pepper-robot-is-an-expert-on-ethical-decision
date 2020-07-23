@@ -16,7 +16,28 @@ import spacy
 import languageprocessing
 import random
 
-HOST = '192.168.1.178'  #you should change this
+# Function to display hostname and
+# IP address
+def get_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # doesn't even have to be reachable
+        s.connect(('10.255.255.255', 1))
+        IP = s.getsockname()[0]
+    except Exception:
+        IP = '127.0.0.1'
+    finally:
+        s.close()
+    return IP
+# Driver code
+ip_address = input("Type the IP address of the server (example "+get_ip()+"): ")
+HOST = ip_address  #stop changing this
+print("The IP address for the server  is: "+HOST)
+print("The IP address retrieved for the server  is: "+get_ip())
+if HOST!=get_ip():
+    print("PROVIDED ADDRESS DOES NOT MATCH")
+    quit()
+
 
 
 ###################################################################################################
@@ -126,11 +147,11 @@ def speech_to_text(nlp):
         print("Could not understand audio")
         message = "silence"
 
-
+    print("\n You are telling me: " + message)
     doc = nlp(message)
 
     frame = languageprocessing.determine_semantic_frame_from_parsed_tree(doc)
-    print("The frame is: " + frame)
+    print("\n The frame is: " + frame)
     return frame
 
 ###################################################################################################
@@ -256,13 +277,12 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if not data:
                 break
             if data == b'Ready':
-                print(data)
                 conn.sendall(b"BeginLearning.endmes")
                 audio=1
                 learn=1
                 video=0
 
-            if data == b'Readywithoutlearning':
+            elif data == b'Readywithoutlearning':
                 print(data)
                 conn.sendall(b"ContinueProcess.endmes")
                 audio=0
