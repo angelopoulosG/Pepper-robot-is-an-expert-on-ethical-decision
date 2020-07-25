@@ -15,7 +15,8 @@ import time
 
 
 
-serverIp = "192.168.1.14" #you should change this
+#serverIp = "192.168.1.14" #you should change this
+serverIp = raw_input('Please enter correctly the IP of the server: \n')#you should change this
 
 
 messages = ['']
