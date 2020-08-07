@@ -20,6 +20,7 @@ from os import path
 import cv2
 import speech_recognition as sr
 from learning import Learning
+from learning import MachineLearning
 import ast
 import spacy
 import languageprocessing
@@ -537,15 +538,35 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                             conn.sendall(b"ContinueProcess.endmesagain")
                             video=1
                         else:
-                            fakeans,answer=theanswer(pas, law, saving, swerve, text)
-                            if (random.choice([0, 1]) == 0):
-                                mystring= "Answer.endmes" + answer
-                                string = mystring.encode('utf-8')
-                                conn.sendall(string)
+                            if menuvariable == 1:
+                                machinelearnpepper=MachineLearning(machinelearningtext,text)
+                                prediction = machinelearnpepper.learn()
+                                if prediction[0]==prediction[1]:
+                                    mystring= "Answer.endmes" + "I will choose option one ^start(animations/Stand/Gestures/YouKnowWhat_2)"
+                                    string = mystring.encode('utf-8')
+                                    conn.sendall(string)
+                                elif prediction[0] == 1:
+                                    mystring= "Answer.endmes" + "I will choose option one ^start(animations/Stand/Gestures/YouKnowWhat_6)"
+                                    string = mystring.encode('utf-8')
+                                    conn.sendall(string)
+                                elif prediction[1] == 1:
+                                    mystring= "Answer.endmes" + "I will choose option two ^start(animations/Stand/Gestures/YouKnowWhat_6)"
+                                    string = mystring.encode('utf-8')
+                                    conn.sendall(string)
+                                else:
+                                    mystring= "Answer.endmes" + "I will choose option one ^start(animations/Stand/Gestures/YouKnowWhat_2)"
+                                    string = mystring.encode('utf-8')
+                                    conn.sendall(string)
                             else:
-                                mystring= "Answer.endmes" + fakeans + answer
-                                string = mystring.encode('utf-8')
-                                conn.sendall(string)
+                                fakeans,answer=theanswer(pas, law, saving, swerve, text)
+                                if (random.choice([0, 1]) == 0):
+                                    mystring= "Answer.endmes" + answer
+                                    string = mystring.encode('utf-8')
+                                    conn.sendall(string)
+                                else:
+                                    mystring= "Answer.endmes" + fakeans + answer
+                                    string = mystring.encode('utf-8')
+                                    conn.sendall(string)
                             if interactionvariable == 1:
                                 audio=5
                             else:
@@ -557,26 +578,31 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 ##############################################################
                 elif info ==1:
                     data=ast.literal_eval(data.decode('utf-8'))
-                    learnpepper=Learning(data)
-                    pas, law, saving, swerve = learnpepper.learn()
-
-                    check = checklearning(pas, law, saving, swerve)
-
-                    if check != 'ok':
-                        mystring= "LearnMore.endmes" + check
-                        string = mystring.encode('utf-8')
-                        conn.sendall(string)
-                        learn=2
-                        if interactionvariable == 1:
-                            audio=5
-                        else:
-                            audio=1
-                        info=0
-                    else:
-                        print("------------------------------")
-                        print(pas, law, saving, swerve)
-                        print("------------------------------")
+                    if menuvariable == 1:
+                        machinelearningtext=data
                         conn.sendall(b"FinishLearning.endmes")
+                    else:
+
+                        learnpepper=Learning(data)
+                        pas, law, saving, swerve = learnpepper.learn()
+
+                        check = checklearning(pas, law, saving, swerve)
+
+                        if check != 'ok':
+                            mystring= "LearnMore.endmes" + check
+                            string = mystring.encode('utf-8')
+                            conn.sendall(string)
+                            learn=2
+                            if interactionvariable == 1:
+                                audio=5
+                            else:
+                                audio=1
+                            info=0
+                        else:
+                            print("------------------------------")
+                            print(pas, law, saving, swerve)
+                            print("------------------------------")
+                            conn.sendall(b"FinishLearning.endmes")
 
                 else:
                     conn.sendall(b"Stop.endmes")
