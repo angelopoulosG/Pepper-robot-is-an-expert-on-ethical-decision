@@ -12,11 +12,30 @@ from naoqi import ALProxy
 import qi
 import sys
 import time
+from os import path
 
 
+if (path.exists('ip.txt')):
+    while True:
+        choice=raw_input("Do you want to use the same ip as before? (y or n) \n")
+        if choice == "Y" or choice =="y":
+            f = open("ip.txt", "r")
+            serverIp =f.read()
+            break
+        elif choice == "N" or choice =="n":
+            serverIp = raw_input('Please enter correctly the IP of the server: \n')#you should change this
+            break
+        else:
+            print("You must type only y or n")
+            print("Please try again")
 
-serverIp = raw_input('Please enter correctly the IP of the server: \n')#you should change this
 
+else:
+    serverIp = raw_input('Please enter correctly the IP of the server: \n')#you should change this
+
+text_file = open("ip.txt", "w+")
+text_file.write("%s" % serverIp)
+text_file.close()
 
 messages = ['']
 server_address = (serverIp, 10001)
@@ -239,8 +258,8 @@ except Exception, f:
 #===================================================================
 
 
-thevalue=menu()
-
+#thevalue=menu()
+thevalue='a'
 #===================================================================
 #Create the sentences
 cases = [
@@ -309,17 +328,25 @@ for message in messages:
                         case=case-1
 
                     if case==0:
+                        if data.split('.endmes')[1] == "0":
+                            interaction= "0"
+                        if data.split('.endmes')[1] == "1":
+                            interaction= "1"
                         speech('Hello human ^start(animations/Stand/Gestures/Hey_1) I am going to ask you some questions.')
                         speech('Lets say \\pau=500\\ you have bought a new self driving car \\pau=500\\ you have to tell me how to proceed in some extreme situations.')
                         tabletService.showImage("https://i.ibb.co/fdfXXPz/case1.png")
                         time.sleep(3)
                         speech(cases[case])
                         speech('What do you choose? First or second option? ^start(animations/Stand/Gestures/Thinking_1)')
-                        listen()
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
                         tabletService.hideImage()
                         case = case+1
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
 
 
                     elif case==1:
@@ -328,11 +355,15 @@ for message in messages:
                         tabletService.showWebview("https://drive.google.com/file/d/1GgqzzFHqkfnAoG89fU6uhjJeGcmu9T5b/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option? ^start(animations/Stand/Gestures/Thinking_3)')
-                        listen()
-                        tabletService.hideWebview()
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
+                        tabletService.hideImage()
                         case = case+1
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
 
                     elif case==2:
                         message = data.split('.endmes')[1]
@@ -340,11 +371,15 @@ for message in messages:
                         tabletService.showWebview("https://drive.google.com/file/d/1Nx4FXm0cDbipWarYFPiOpaQhDLakRbqq/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option? ^start(animations/Stand/Gestures/Thinking_1)')
-                        listen()
-                        tabletService.hideWebview()
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
+                        tabletService.hideImage()
                         case = case+1
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
 
                     elif case==3:
                         message = data.split('.endmes')[1]
@@ -352,11 +387,15 @@ for message in messages:
                         tabletService.showWebview("https://drive.google.com/file/d/1dWBjWWDupKgYwDNrxQuXpUh7-zNWZX5e/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option? ^start(animations/Stand/Gestures/Thinking_4)')
-                        listen()
-                        tabletService.hideWebview()
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
+                        tabletService.hideImage()
                         case = case+1
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
 
                     elif case==4:
                         message = data.split('.endmes')[1]
@@ -364,11 +403,15 @@ for message in messages:
                         tabletService.showWebview("https://drive.google.com/file/d/1LPmb5_BkI2AJc8SGjEv5v3PpWaQtJ68w/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option? ^start(animations/Stand/Gestures/Thinking_6)')
-                        listen()
-                        tabletService.hideWebview()
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
+                        tabletService.hideImage()
                         case = case+1
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
 
                     elif case==5:
                         message = data.split('.endmes')[1]
@@ -376,11 +419,15 @@ for message in messages:
                         tabletService.showWebview("https://drive.google.com/file/d/1HpOrw4CMnxt68JUOW0IyhXq-5cFoHL36/preview")
                         speech(cases[case])
                         speech('What do you choose? First or second option? ^start(animations/Stand/Gestures/Thinking_8)')
-                        listen()
-                        tabletService.hideWebview()
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
+                        tabletService.hideImage()
                         case = case+1
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
 
                     else:
                         message = data.split('.endmes')[1]
@@ -395,52 +442,80 @@ for message in messages:
                     if morecase==0:
                         speech(morecases[morecase])
                         speech('Do you agree? ^start(animations/Stand/Waiting/Think_1)')
-                        listen()
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
 
 
                     elif morecase==1:
                         speech(morecases[morecase])
                         speech('Do you agree? ^start(animations/Stand/Waiting/Think_3)')
-                        listen()
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
 
                     elif morecase==2:
                         speech(morecases[morecase])
                         speech('Do you agree? ^start(animations/Stand/Waiting/Think_2)')
-                        listen()
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
 
                     elif morecase==3:
                         speech(morecases[morecase])
                         speech('Do you agree? ^start(animations/Stand/Waiting/Think_1)')
-                        listen()
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
 
                     elif morecase==4:
                         speech(morecases[morecase])
                         speech('Do you agree? ^start(animations/Stand/Waiting/Think_2)')
-                        listen()
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
 
                     elif morecase==5:
                         speech(morecases[morecase])
                         speech('Do you agree? ^start(animations/Stand/Waiting/Think_1)')
-                        listen()
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
 
                     else:
                         speech(morecases[morecase])
                         speech('Do you agree? ^start(animations/Stand/Waiting/Think_3)')
-                        listen()
-                        bytes = open(voice).read()
-                        s.send(str(len(bytes)))
+                        if interaction == "0":
+                            listen()
+                            bytes = open(voice).read()
+                            s.send(str(len(bytes)))
+                        else:
+                            mydata = raw_input('Please type your answer :')
+                            s.send(mydata)
 
 
 
@@ -456,9 +531,13 @@ for message in messages:
                 if(command == 'Voice'):
                     message = data.split('.endmes')[1]
                     speech(message)
-                    listen()
-                    bytes = open(voice).read()
-                    s.send(str(len(bytes)))
+                    if interaction == "0":
+                        listen()
+                        bytes = open(voice).read()
+                        s.send(str(len(bytes)))
+                    else:
+                        mydata = raw_input('Please type your answer :')
+                        s.send(mydata)
 
                 if(command == 'ContinueWithCamera'):
                     s.sendall(bytes)
@@ -485,9 +564,13 @@ for message in messages:
                     print moodService.getEmotionalReaction()
                     moodService.unsubscribe("Tutorial_RecordMood")
                     speech('Are you going to show me another case ? ^start(animations/Stand/Waiting/Think_1)')
-                    listen()
-                    bytes = open(voice).read()
-                    s.send(str(len(bytes)))
+                    if interaction == "0":
+                        listen()
+                        bytes = open(voice).read()
+                        s.send(str(len(bytes)))
+                    else:
+                        mydata = raw_input('Please type your answer :')
+                        s.send(mydata)
 
                 if(command == 'ContinueProcess'):
                     if data.split('.endmes')[1] == "again":
