@@ -51,6 +51,17 @@ pip3 install thinc
 pip3 install console-menu
 ```
 
+*   pandas, a Python package that provides fast, flexible, and expressive data structures designed to make working with structured and time series data both easy and intuitive. 
+
+```console
+pip3 install pandas
+```
+*   scikit-learn, a Python module for machine learning built on top of SciPy and is distributed under the 3-Clause BSD license. 
+
+```console
+pip3 install -U scikit-learn
+```
+
 ### Pepper Robot
 Pepper is a semi-humanoid robot manufactured by SoftBank Robotics (formerly Aldebaran Robotics).
 
