@@ -56,7 +56,6 @@ Pepper is a semi-humanoid robot manufactured by SoftBank Robotics (formerly Alde
 
 ## How to run it
 *   First, download all the code from the folder **Server** to your computer/server.
-*   Go to **thebrain.py** and change the **line 16** with your IP.
 *   Finally, Enable the "Brain":
 
 ```console
@@ -64,7 +63,6 @@ python3 thebrain.py
 ```
 
 *   After enabling the server, SSH onto the robot and download all the code from the folder **Pepper**.
-*   Go to **ethical_pepper.py** and change the **line 16** with your server's IP.
 *   Finally, Enable Pepper:
 
 ```console
