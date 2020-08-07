@@ -45,6 +45,12 @@ python3 -m spacy download en_core_web_sm
 pip3 install thinc
 ```
 
+*   console-menu, a simple Python menu-based UI system for terminal applications.
+
+```console
+pip3 install console-menu
+```
+
 ### Pepper Robot
 Pepper is a semi-humanoid robot manufactured by SoftBank Robotics (formerly Aldebaran Robotics).
 
