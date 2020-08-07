@@ -299,3 +299,100 @@ class Learning:
         else:
             weight_sumswerve=4
         return weight_sumpas, weight_sumlaw, weight_sumsaving, weight_sumswerve
+
+
+
+
+
+from sklearn.linear_model import LogisticRegression
+import pandas
+
+class MachineLearning:
+    def __init__(self, answer,text):
+        self.answer= answer
+        self.text=text
+    def learn(self):
+
+        x_test=[]
+        x_test1=[]
+        x_test2=[]
+
+        text = self.text.split("'")
+        a=text[3]
+        answer1 = a.split('.')
+        if (answer1[0] == 'pas'):
+            x_test1.append(0)
+        else:
+            x_test1.append(1)
+        if (answer1[1] == '0'):
+            x_test1.append(0)
+        else:
+            x_test1.append(1)
+
+        x_test1.append(int(answer1[2]))
+        x_test1.append(int(answer1[3]))
+        x_test1.append(int(answer1[4]))
+        x_test1.append(int(answer1[5]))
+
+        if (len(answer1)==7):
+            if (answer1[6] == 'FL'):
+                x_test1.append(1)
+            else:
+                x_test1.append(0)
+        else:
+            x_test1.append(1)
+
+        b=text[5]
+        answer2 = b.split('.')
+        if (answer2[0] == 'pas'):
+            x_test2.append(0)
+        else:
+            x_test2.append(1)
+        if (answer2[1] == '0'):
+            x_test2.append(0)
+        else:
+            x_test2.append(1)
+
+        x_test2.append(int(answer2[2]))
+        x_test2.append(int(answer2[3]))
+        x_test2.append(int(answer2[4]))
+        x_test2.append(int(answer2[5]))
+
+
+        if (len(answer2)==7):
+            if (answer2[6] == 'FL'):
+                x_test2.append(1)
+            else:
+                x_test2.append(0)
+        else:
+            x_test2.append(1)
+
+
+        x_test.append(x_test1)
+        x_test.append(x_test2)
+
+        x_test.append(x_test1)
+        x_test.append(x_test2)
+
+
+
+
+
+        y=[]
+        for i in range(6):
+        #getting user's answer
+        ##########################################
+            if 	(self.answer[i]== "first"):
+                y.append(0)
+                y.append(1)
+            if 	(self.answer[i]== "second"):
+                y.append(1)
+                y.append(0)                
+        ##########################################
+        #y.append(answers)
+        data=pandas.read_csv('pepper.csv')
+        x=data.drop('decision',axis=1)
+        clf = LogisticRegression(random_state=0).fit(x, y)
+        y_pred = clf.predict(x_test)
+
+        return y_pred
