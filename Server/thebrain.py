@@ -5,6 +5,15 @@ Created on Thu Apr  2 16:01:44 2020
 @author: Georgios Angelopoulos
 """
 
+
+
+
+
+# Import the necessary packages
+from consolemenu import *
+from consolemenu.format import *
+from consolemenu.items import *
+from consolemenu import SelectionMenu
 import socket
 import os
 from os import path
@@ -15,6 +24,13 @@ import ast
 import spacy
 import languageprocessing
 import random
+
+
+
+
+###################################################################################################
+###################################################################################################
+###################################################################################################
 
 # Function to display hostname and
 # IP address
@@ -29,19 +45,9 @@ def get_ip():
     finally:
         s.close()
     return IP
-# Driver code
-ip_address = input("Type the IP address of the server (example "+get_ip()+"): ")
-HOST = ip_address  #stop changing this
-print("The IP address for the server  is: "+HOST)
-print("The IP address retrieved for the server  is: "+get_ip())
-if HOST!=get_ip():
-    print("PROVIDED ADDRESS DOES NOT MATCH")
-    quit()
 
 
 
-###################################################################################################
-###################################################################################################
 ###################################################################################################
 def checklearning(pas, law, saving, swerve):
     if pas == law:
@@ -108,6 +114,8 @@ def learningmore(pas, law, saving, swerve, answer):
 ###################################################################################################
 def qrcode():
 
+    print("\n ------------------------------ ")
+
     cap = cv2.VideoCapture('video.avi')
     qrCodeDetector = cv2.QRCodeDetector()
     dtext=""
@@ -129,12 +137,18 @@ def qrcode():
 
     if dtext != "":
         print(dtext)
+        print("\n ------------------------------ ")
+
         return dtext
     else:
-        print("No qrcode")
+        print("NO QRCODE!!!!!")
+        print("\n ------------------------------ ")
+
         return '0'
 ###################################################################################################
 def speech_to_text(nlp):
+
+    print("\n ------------------------------ ")
 
     r = sr.Recognizer()
     audio = sr.AudioFile('audio.wav')
@@ -146,12 +160,12 @@ def speech_to_text(nlp):
     except sr.UnknownValueError:
         print("Could not understand audio")
         message = "silence"
-
     print("\n You are telling me: " + message)
     doc = nlp(message)
 
     frame = languageprocessing.determine_semantic_frame_from_parsed_tree(doc)
     print("\n The frame is: " + frame)
+    print("\n ------------------------------ ")
     return frame
 
 ###################################################################################################
@@ -247,7 +261,7 @@ def theanswer(pas, law, saving, swerve, text):
 ###################################################################################################
 
 
-
+HOST = get_ip()
 PORT = 10001        # Port to listen on (non-privileged ports are > 1023)
 camera,audio,case,info= 0,0,0,0
 pas, law, saving, swerve =0,0,0,0
@@ -263,27 +277,70 @@ if (path.exists('video.avi')):
 
 nlp = spacy.load("en_core_web_sm")
 
+###################################-THE MENU-#######################################################################
+menu_format = MenuFormatBuilder().set_border_style_type(MenuBorderStyleType.HEAVY_BORDER) \
+    .set_prompt("SELECT>") \
+    .set_title_align('center') \
+    .set_subtitle_align('center') \
+    .set_left_margin(4) \
+    .set_right_margin(4) \
+    .show_header_bottom_border(True)
+####################################################################################################################
 
 
+
+
+
+menu = SelectionMenu(["Start the brain and use algorithmic learning", "Start the brain and use machine learning"], title="Welcome to the Brain of Pepper",
+                    subtitle="The ip is:  " + get_ip() ,
+                    show_exit_option=False,
+                    formatter=menu_format)
+menu.show()
+menu.join()
+menuvariable = menu.selected_option
+
+print("\n Waiting for the robot...")
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
+
     conn, addr = s.accept()
+
     with conn:
-        print('Connected by', addr)
+        #print('Connected by', addr)
+        menu = SelectionMenu(["I want to communicate orally with the robot", "I want to type my answers on the robot"], title="Congratulations we have a connection.",
+                            subtitle="Please choose the interaction",
+                            show_exit_option=False,
+                            formatter=menu_format)
+        menu.show()
+        menu.join()
+        interactionvariable = menu.selected_option
+
+
+
         while True:
             data = conn.recv(4096)
             if not data:
                 break
             if data == b'Ready':
-                conn.sendall(b"BeginLearning.endmes")
-                audio=1
+                print("------------------------------")
+                print(data)
+                print("------------------------------")
+                mystring= "BeginLearning.endmes" + str(interactionvariable)
+                string = mystring.encode('utf-8')
+                conn.sendall(string)
+                if interactionvariable == 1:
+                    audio=5
+                else:
+                    audio=1
                 learn=1
                 video=0
 
             elif data == b'Readywithoutlearning':
+                print("------------------------------")
                 print(data)
+                print("------------------------------")
                 conn.sendall(b"ContinueProcess.endmes")
                 audio=0
                 info=0
@@ -293,14 +350,18 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 pas, law, saving, swerve= 3,2,0,1
 
             elif data == b'Learning done':
+                print("------------------------------")
                 print(data)
+                print("------------------------------")
                 conn.sendall(b"SendMeInfo.endmes")
                 audio=0
                 info=1
                 learn=0
 
             elif data == b'Finish OK':
+                print("------------------------------")
                 print(data)
+                print("------------------------------")
                 conn.sendall(b"ContinueProcess.endmes")
                 audio=0
                 info=0
@@ -315,6 +376,63 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     length=int(data)
                     conn.sendall(b"ContinueWithVoice.endmes")
                     audio = 2
+                elif audio ==5:
+                    data = data.decode('utf-8')
+                    doc = nlp(data)
+                    frame = languageprocessing.determine_semantic_frame_from_parsed_tree(doc)
+                    if frame == "request_first":
+                        message="first"
+                    if frame =="request_second":
+                        message= "second"
+                    if frame == "accept_suggested":
+                        message="y"
+                    if frame =="deny_suggested":
+                        message= "no"
+                    if frame=="request_goodbye":
+                        conn.sendall(b"Stop.endmes")
+                    if frame=="False" or frame=="greeting":
+                        message== "silence"
+                        counter_silence= counter_silence +1
+                        if counter_silence > 3:
+                            mystring= "Stop.endmes" + "silence"
+                            string = mystring.encode('utf-8')
+                            conn.sendall(string)
+                    else:
+                        if counter_silence > 0:
+                            counter_silence= counter_silence - 1
+                    if checkagain==1:
+                        if message=='y':
+                            conn.sendall(b"ContinueProcess.endmes")
+                            audio=0
+                            info=0
+                            learn=0
+                            video=1
+                            counter=0
+                        else:
+                            conn.sendall(b"Stop.endmes")
+                    if learn == 1 :
+                        if frame != "request_first" and frame !="request_second":
+                            message="silence"
+                            counter_silence= counter_silence +1
+
+                        mystring= "BeginLearning.endmes" + message
+                        string = mystring.encode('utf-8')
+                        conn.sendall(string)
+
+                    if learn ==2 :
+                        pas, law, saving, swerve =learningmore(pas, law, saving, swerve, message)
+                        check = checklearning(pas, law, saving, swerve)
+                        if check != 'ok':
+                            mystring= "LearnMore.endmes" + check
+                            string = mystring.encode('utf-8')
+                            conn.sendall(string)
+                            learn=2
+                        else:
+                            print("------------------------------")
+                            print(pas, law, saving, swerve)
+                            print("------------------------------")
+                            conn.sendall(b"FinishLearning.endmes")
+
                 elif audio == 2:
                     t = open("audio.wav", "ab+")
                     t.write(data)
@@ -374,7 +492,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                                 conn.sendall(string)
                                 learn=2
                             else:
+                                print("------------------------------")
                                 print(pas, law, saving, swerve)
+                                print("------------------------------")
                                 conn.sendall(b"FinishLearning.endmes")
 
                 ##############################################################
@@ -426,7 +546,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                                 mystring= "Answer.endmes" + fakeans + answer
                                 string = mystring.encode('utf-8')
                                 conn.sendall(string)
-                            audio=1
+                            if interactionvariable == 1:
+                                audio=5
+                            else:
+                                audio=1
                             video=0
                             camera=0
                             checkagain=1
@@ -444,11 +567,21 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         string = mystring.encode('utf-8')
                         conn.sendall(string)
                         learn=2
-                        audio=1
+                        if interactionvariable == 1:
+                            audio=5
+                        else:
+                            audio=1
                         info=0
                     else:
+                        print("------------------------------")
                         print(pas, law, saving, swerve)
+                        print("------------------------------")
                         conn.sendall(b"FinishLearning.endmes")
 
                 else:
                     conn.sendall(b"Stop.endmes")
+
+
+
+
+
