@@ -541,7 +541,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                                 menu.join()
                                 problemvariable = menu.selected_option
                                 if problemvariable != 4:
-                                    
+
                                     if problemvariable==0:
                                         counter=counter-1
                                         text = "['','pas.0.3.0.0.0','ped.1.0.3.0.0.FL']"
