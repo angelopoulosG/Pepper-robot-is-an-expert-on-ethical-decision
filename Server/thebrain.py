@@ -269,7 +269,7 @@ pas, law, saving, swerve =0,0,0,0
 checkagain=0
 counter_silence=0
 message=''
-
+machinelearningtext =[]
 if (path.exists('audio.wav')):
     os.remove("audio.wav")
 
@@ -531,12 +531,78 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         os.remove("video.avi")
                         if text == '0':
                             if counter>0:
-                                mystring= "Stop.endmes" + "silence"
-                                string = mystring.encode('utf-8')
-                                conn.sendall(string)
-                            counter=counter+1
-                            conn.sendall(b"ContinueProcess.endmesagain")
-                            video=1
+
+
+                                menu = SelectionMenu(["Use the case 1", "Use the case 2", "Use the case 3", "Use the case 4", "I dont want any of the above."], title="Sorry human but we have a problem. I cant find the qrcode.",
+                                                    subtitle="Please choose one of the below",
+                                                    show_exit_option=False,
+                                                    formatter=menu_format)
+                                menu.show()
+                                menu.join()
+                                problemvariable = menu.selected_option
+                                if problemvariable != 4:
+                                    
+                                    if problemvariable==0:
+                                        counter=counter-1
+                                        text = "['','pas.0.3.0.0.0','ped.1.0.3.0.0.FL']"
+                                    elif problemvariable==1:
+                                        counter=counter-1
+                                        text= "['','ped.0.0.2.0.0.FL','ped.1.1.0.0.0.FL']"
+                                    elif problemvariable==2:
+                                        counter=counter-1
+                                        text= "['','ped.1.1.0.1.0.NL','pas.0.0.0.0.2']"
+                                    else:
+                                        counter=counter-1
+                                        text= "['','ped.0.0.1.0.0.NL','ped.1.1.0.0.0.FL']"
+
+                                    if menuvariable == 1:
+                                        machinelearnpepper=MachineLearning(machinelearningtext,text)
+                                        prediction = machinelearnpepper.learn()
+                                        if prediction[0]==prediction[1]:
+                                            mystring= "Answer.endmes" + "I will choose option one ^start(animations/Stand/Gestures/YouKnowWhat_2)"
+                                            string = mystring.encode('utf-8')
+                                            conn.sendall(string)
+                                        elif prediction[0] == 1:
+                                            mystring= "Answer.endmes" + "I will choose option one ^start(animations/Stand/Gestures/YouKnowWhat_6)"
+                                            string = mystring.encode('utf-8')
+                                            conn.sendall(string)
+                                        elif prediction[1] == 1:
+                                            mystring= "Answer.endmes" + "I will choose option two ^start(animations/Stand/Gestures/YouKnowWhat_6)"
+                                            string = mystring.encode('utf-8')
+                                            conn.sendall(string)
+                                        else:
+                                            mystring= "Answer.endmes" + "I will choose option one ^start(animations/Stand/Gestures/YouKnowWhat_2)"
+                                            string = mystring.encode('utf-8')
+                                            conn.sendall(string)
+                                    else:
+                                        fakeans,answer=theanswer(pas, law, saving, swerve, text)
+                                        if (random.choice([0, 1]) == 0):
+                                            mystring= "Answer.endmes" + answer
+                                            string = mystring.encode('utf-8')
+                                            conn.sendall(string)
+                                        else:
+                                            mystring= "Answer.endmes" + fakeans + answer
+                                            string = mystring.encode('utf-8')
+                                            conn.sendall(string)
+                                    if interactionvariable == 1:
+                                        audio=5
+                                    else:
+                                        audio=1
+                                    video=0
+                                    camera=0
+                                    checkagain=1
+                                    counter_silence=0
+                                    
+                                    
+                                    
+                                else:
+                                    mystring= "Stop.endmes" + "silence"
+                                    string = mystring.encode('utf-8')
+                                    conn.sendall(string)
+                            else:
+                                counter=counter+1
+                                conn.sendall(b"ContinueProcess.endmesagain")
+                                video=1
                         else:
                             if menuvariable == 1:
                                 machinelearnpepper=MachineLearning(machinelearningtext,text)
