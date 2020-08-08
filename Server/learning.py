@@ -360,10 +360,10 @@ class MachineLearning:
 
 
         if (len(answer2)==7):
-            if (answer2[6] == 'FL'):
-                x_test2.append(1)
-            else:
+            if (answer2[6] == 'NL'):
                 x_test2.append(0)
+            else:
+                x_test2.append(1)
         else:
             x_test2.append(1)
 
