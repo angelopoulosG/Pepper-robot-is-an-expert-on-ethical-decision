@@ -304,7 +304,9 @@ class Learning:
 
 
 
-from sklearn.linear_model import LogisticRegression
+#from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+
 import pandas
 
 class MachineLearning:
@@ -392,7 +394,8 @@ class MachineLearning:
         #y.append(answers)
         data=pandas.read_csv('pepper.csv')
         x=data.drop('decision',axis=1)
-        clf = LogisticRegression(random_state=0).fit(x, y)
+        clf = KNeighborsClassifier(n_neighbors=1).fit(x, y)
+        #clf = LogisticRegression(random_state=0).fit(x, y)
         y_pred = clf.predict(x_test)
 
         return y_pred
