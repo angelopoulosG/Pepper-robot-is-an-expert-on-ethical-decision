@@ -384,17 +384,17 @@ class MachineLearning:
         for i in range(6):
         #getting user's answer
         ##########################################
-            if 	(self.answer[i]== "first"):
+            if (self.answer[i]== "first"):
                 y.append(1)
                 y.append(0)
-            if 	(self.answer[i]== "second"):
+            if (self.answer[i]== "second"):
                 y.append(0)
                 y.append(1)
         ##########################################
         #y.append(answers)
         data=pandas.read_csv('pepper.csv')
         x=data.drop('decision',axis=1)
-        clf = KNeighborsClassifier(n_neighbors=1).fit(x, y)
+        clf = KNeighborsClassifier(n_neighbors=3).fit(x, y)
         #clf = LogisticRegression(random_state=0).fit(x, y)
         y_pred = clf.predict(x_test)
 
