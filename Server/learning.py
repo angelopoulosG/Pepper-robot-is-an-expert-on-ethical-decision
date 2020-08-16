@@ -385,11 +385,11 @@ class MachineLearning:
         #getting user's answer
         ##########################################
             if 	(self.answer[i]== "first"):
+                y.append(1)
+                y.append(0)
+            if 	(self.answer[i]== "second"):
                 y.append(0)
                 y.append(1)
-            if 	(self.answer[i]== "second"):
-                y.append(1)
-                y.append(0)                
         ##########################################
         #y.append(answers)
         data=pandas.read_csv('pepper.csv')
