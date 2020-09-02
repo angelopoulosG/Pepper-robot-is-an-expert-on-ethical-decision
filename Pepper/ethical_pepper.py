@@ -258,6 +258,20 @@ except Exception, f:
 #===================================================================
 
 
+motion_service = session.service("ALMotion")
+tracker_service = session.service("ALTracker")
+
+# First, wake up.
+motion_service.wakeUp()
+
+# Add target to track.
+targetName = "Face"
+faceWidth = 0.1
+tracker_service.registerTarget(targetName, faceWidth)
+
+# Then, start tracker.
+tracker_service.track(targetName)
+
 #thevalue=menu()
 thevalue='a'
 #===================================================================
@@ -594,4 +608,8 @@ for message in messages:
 
     print >>sys.stderr, 'closing socket', s.getsockname()
     s.close()
+    # Stop tracker.
+    tracker_service.stopTracker()
+    tracker_service.unregisterAllTargets()
+    motion_service.rest()
     print("----------------------------")
